@@ -3,7 +3,7 @@
 int board[19][19] = { 0 };
 
 int main(void) {
-	printf("  จๆจ็จ่จ้จ๊จ๋จ์จํจ๎จ๏จ๐จ๑จ๒จ๓จ๔จ๕จอจฮจฯ -- xมยวฅ\n");
+	printf("  ยจรฆยจรงยจรจยจรฉยจรชยจรซยจรฌยจรญยจรฎยจรฏยจรฐยจรฑยจรฒยจรณยจรดยจรตยจรยจรยจร -- xรรรยฅ\n");
 	for (int i = 0; i < 10; i++)
 	{
 		printf("%d ", i);
@@ -11,20 +11,21 @@ int main(void) {
 		{
 			if (board[i][j] == 0)
 			{
-				printf("กเ");
+				printf("ยกร ");
 			}
 			else if (board[i][j] == 1)
 			{
-				printf("กÛ");
+				printf("ยกร");
 			}
 			else if (board[i][j] == -1)
 			{
-				printf("กÜ");
+				printf("ยกร");
 			}
 		}
 		printf("\n");
 	}
 
+	
 	for (int i = 10; i < 19; i++)
 	{
 		printf("%d", i);
@@ -32,18 +33,18 @@ int main(void) {
 		{
 			if (board[i][j] == 0)
 			{
-				printf("กเ");
+				printf("ยกร ");
 			}
 			else if (board[i][j] == 1)
 			{
-				printf("กÛ");
+				printf("ยกร");
 			}
 			else if (board[i][j] == -1)
 			{
-				printf("กÜ");
+				printf("ยกร");
 			}
 		}
 		printf("\n");
 	}
-	printf("|\ny\nมย\nวฅ\n\n");
+	printf("|\ny\nรร\nรยฅ\n\n");
 }
