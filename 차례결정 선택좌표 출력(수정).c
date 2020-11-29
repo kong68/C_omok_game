@@ -5,46 +5,45 @@ int change = 0;
 int win = 0;
 
 
-void turnprint(int(*board)[19])   // Â÷·Ê°áÁ¤ & ¼±ÅÃ ÁÂÇ¥¿¡ Ãâ·ÂÇÏ´Â ÇÔ¼ö.
+void turnprint(int(*board)[19])   // ì°¨ë¡€ê²°ì • & ì„ íƒ ì¢Œí‘œì— ì¶œë ¥í•˜ëŠ” í•¨ìˆ˜.
 {
 	int selectX = 0, selectY = 0;
-	int x = 0;
-	int y = 0;
-	//¹Ì´Ï°ÔÀÓ ½Â¸®ÀÚ == °ËÀºµ¹(1) 
+	
+	//ë¯¸ë‹ˆê²Œì„ ìŠ¹ë¦¬ì == ê²€ì€ëŒ(1) 
 	//A ==1  B==0
-	if (win == 1)  //¼±°ø ½Â¸®ÀÚ°¡ AÀÏ ¶§
+	if (win == 1)  //ì„ ê³µ ìŠ¹ë¦¬ìê°€ Aì¼ ë•Œ
 	{
 		if (change == 1)
 		{
-			printf("AÀÇ Â÷·ÊÀÔ´Ï´Ù.\n");
-			printf("XÁÂÇ¥¿Í YÁÂÇ¥¸¦ ÀÔ·ÂÇÏ½Ã¿À:  ");
+			printf("Aì˜ ì°¨ë¡€ì…ë‹ˆë‹¤.\n");
+			printf("Xì¢Œí‘œì™€ Yì¢Œí‘œë¥¼ ì…ë ¥í•˜ì‹œì˜¤:  ");
 			scanf_s("%d%d", &selectX, &selectY);
 			board[selectY][selectX] = 1;
 			change = 0;
 		}
 		else if (change == 0)
 		{
-			printf("BÀÇ Â÷·ÊÀÔ´Ï´Ù.\n");
-			printf("XÁÂÇ¥¿Í YÁÂÇ¥¸¦ ÀÔ·ÂÇÏ½Ã¿À:  ");
+			printf("Bì˜ ì°¨ë¡€ì…ë‹ˆë‹¤.\n");
+			printf("Xì¢Œí‘œì™€ Yì¢Œí‘œë¥¼ ì…ë ¥í•˜ì‹œì˜¤:  ");
 			scanf_s("%d%d", &selectX, &selectY);
 			board[selectY][selectX] = -1;
 			change = 1;
 		}
 	}
-	else if (win == 0)  //¼±°ø ½Â¸®ÀÚ°¡ BÀÏ ¶§
+	else if (win == 0)  //ì„ ê³µ ìŠ¹ë¦¬ìê°€ Bì¼ ë•Œ
 	{
 		if (change == 0)
 		{
-			printf("BÀÇ Â÷·ÊÀÔ´Ï´Ù.\n");
-			printf("XÁÂÇ¥¿Í YÁÂÇ¥¸¦ ÀÔ·ÂÇÏ½Ã¿À:  ");
+			printf("Bì˜ ì°¨ë¡€ì…ë‹ˆë‹¤.\n");
+			printf("Xì¢Œí‘œì™€ Yì¢Œí‘œë¥¼ ì…ë ¥í•˜ì‹œì˜¤:  ");
 			scanf_s("%d%d", &selectX, &selectY);
 			board[selectY][selectX] = 1;
 			change = 1;
 		}
 		else if (change == 1)
 		{
-			printf("AÀÇ Â÷·ÊÀÔ´Ï´Ù.\n");
-			printf("XÁÂÇ¥¿Í YÁÂÇ¥¸¦ ÀÔ·ÂÇÏ½Ã¿À:  ");
+			printf("Aì˜ ì°¨ë¡€ì…ë‹ˆë‹¤.\n");
+			printf("Xì¢Œí‘œì™€ Yì¢Œí‘œë¥¼ ì…ë ¥í•˜ì‹œì˜¤:  ");
 			scanf_s("%d%d", &selectX, &selectY);
 			board[selectY][selectX] = -1;
 			change = 0;
