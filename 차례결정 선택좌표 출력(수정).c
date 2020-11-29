@@ -1,6 +1,5 @@
 
 #include <stdio.h>
-
 int change = 0;
 int win = 0;
 
