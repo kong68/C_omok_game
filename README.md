@@ -30,7 +30,7 @@ void LetterColor(int color) { // 오목돌 색 변경함수
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BLACK);
 }
 
-void Board(void)
+void Board(void)		//오목판 
 {
 	printf("ⓞ①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮ⓐⓑⓒ -- x좌표\n");
 	if (board[0][0] == 0)	//첫번째줄
@@ -165,7 +165,7 @@ void Board(void)
 	}								//여기까지가 마지막번째줄
 }
 int main(void) {
-	Board();
+	Board();		//
 
 	return 0;
 }
