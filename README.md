@@ -9,59 +9,164 @@
  board[i][j]에는 보드의 (j, i) 좌표에 해당하는 칸의 상태가 적혀있습니다.
  
  board[i][j] =  0: 비어있는 칸입니다.\
- board[i][j] =  1: 백돌을 둔 칸입니다.\
- board[i][j] = -1: 흑돌을 둔 칸입니다.
+ board[i][j] =  1: 흑돌을 둔 칸입니다.\
+ board[i][j] = -1: 백돌을 둔 칸입니다.
  
  ## 메인함수 (main.c)
  
 ```C
 #include <stdio.h>
+#include <Windows.h>
+
+#define BLACK 0
+#define WHITE 7
 
 int board[19][19] = { 0 };
 
-int main(void) {
-	printf("  ⓩ①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮ⓐⓑⓒ -- x좌표\n");
-	for (int i = 0; i < 10; i++)
-	{
-		printf("%d ", i);
-		for (int j = 0; j < 19; j++)
-		{
-			if (board[i][j] == 0)
-			{
-				printf("□");
-			}
-			else if (board[i][j] == 1)
-			{
-				printf("○");
-			}
-			else if (board[i][j] == -1)
-			{
-				printf("●");
-			}
-		}
-		printf("\n");
-	}
+void LetterColor(int color) { // 배경색이 검은색인 글씨색 변경
+	if (color == WHITE)
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
+	else if (color == BLACK)
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BLACK);
+}
 
-	for (int i = 10; i < 19; i++)
+void Board(void)
+{
+	printf("ⓞ①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮ⓐⓑⓒ -- x좌표\n");
+	if (board[0][0] == 0)	//첫번째줄
 	{
-		printf("%d", i);
-		for (int j = 0; j < 19; j++)
+		printf("┌ ");
+	}
+	else if (board[0][0] == 1)
+	{
+		LetterColor(BLACK);
+		printf("●");
+	}
+	else if (board[0][0] == -1)
+	{
+		LetterColor(WHITE);
+		printf("●");
+	}
+	for (int i = 1; i < 18; i++)
+	{
+		if (board[0][i] == 0)
+		{
+			printf("┬ ");
+		}
+		else if (board[0][i] == 1)
+		{
+			LetterColor(BLACK);
+			printf("●");
+		}
+		else if (board[0][i] == -1)
+		{
+			LetterColor(WHITE);
+			printf("●");
+		}
+	}
+	if (board[0][18] == 0)
+	{
+		printf("┐ 0\n");
+	}
+	else if (board[0][18] == 1)
+	{
+		LetterColor(BLACK);
+		printf("●");
+	}
+	else if (board[0][18] == -1)
+	{
+		LetterColor(WHITE);
+		printf("●");
+	}									//여기까지가 첫번째줄
+
+	for (int i = 1; i < 18; i++)		//두번째줄부터 18번째줄까지
+	{
+		if (board[i][0] == 0)
+		{
+			printf("├ ");
+		}
+		else if (board[i][0] == 1)
+		{
+			LetterColor(BLACK);
+			printf("●");
+		}
+		else if (board[i][0] == -1)
+		{
+			LetterColor(WHITE);
+			printf("●");
+		}
+		for (int j = 1; j < 18; j++)
 		{
 			if (board[i][j] == 0)
 			{
-				printf("□");
+				printf("┼ ");
 			}
 			else if (board[i][j] == 1)
 			{
-				printf("○");
+				LetterColor(BLACK);
+				printf("●");
 			}
 			else if (board[i][j] == -1)
 			{
+				LetterColor(WHITE);
 				printf("●");
 			}
 		}
-		printf("\n");
+		if (board[i][18] == 0)
+		{
+			printf("┤ %d\n", i);
+		}
+		else if (board[i][18] == 1)
+		{
+			LetterColor(BLACK);
+			printf("●");
+		}
+		else if (board[i][18] == -1)
+		{
+			LetterColor(WHITE);
+			printf("●");
+		}
+	}									//여기까지가 두번째줄
+
+	if (board[18][0] == 0)	//마지막번째줄
+	{
+		printf("└ ");
 	}
-	printf("|\ny\n좌\n표\n\n");
+	else if (board[18][0] == 1)
+	{
+		LetterColor(BLACK);
+		printf("●");
+	}
+	else if (board[18][0] == -1)
+	{
+		LetterColor(WHITE);
+		printf("●");
+	}
+	for (int i = 1; i < 18; i++)
+	{
+		if (board[18][i] == 0)
+		{
+			printf("┴ ");
+		}
+	}
+	if (board[18][18] == 0)	
+	{
+		printf("┘ 18 -- y좌표\n");
+	}
+	else if (board[18][18] == 1)
+	{
+		LetterColor(BLACK);
+		printf("●");
+	}
+	else if (board[18][18] == -1)
+	{
+		LetterColor(WHITE);
+		printf("●");
+	}								//여기까지가 마지막번째줄
+}
+int main(void) {
+	Board();
+
+	return 0;
 }
 ```
