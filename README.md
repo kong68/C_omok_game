@@ -165,7 +165,7 @@ void Board(void)		//오목판
 	}								//여기까지가 마지막번째줄
 }
 int main(void) {
-	Board();		//
+	Board();		//오목판함수 
 
 	return 0;
 }
