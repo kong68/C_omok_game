@@ -6,62 +6,62 @@
 
 int board[19][19] = { 0 };
 
-void LetterColor(int color) { // ¿À¸ñµ¹ »ö º¯°æ
+void LetterColor(int color) { // ì˜¤ëª©ëŒ ìƒ‰ ë³€ê²½
 	if (color == WHITE)
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (2 << 4) + WHITE);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (6 << 4) + WHITE);
 	else if (color == BLACK)
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (2 << 4) + BLACK);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (6 << 4) + BLACK);
 }
 
-void Board(void)				//¿À¸ñÆÇ ÇÔ¼ö
+void Board(void)				//ì˜¤ëª©íŒ í•¨ìˆ˜
 {
-	printf("¨Û¨ç¨è¨é¨ê¨ë¨ì¨í¨î¨ï¨ğ¨ñ¨ò¨ó¨ô¨õ¨Í¨Î¨Ï -- xÁÂÇ¥\n");
-	if (board[0][0] == 0)	//Ã¹¹øÂ°ÁÙ
+	printf("â“â‘ â‘¡â‘¢â‘£â‘¤â‘¥â‘¦â‘§â‘¨â‘©â‘ªâ‘«â‘¬â‘­â‘®â“â“‘â“’ -- xì¢Œí‘œ\n");
+	if (board[0][0] == 0)	//ì²«ë²ˆì§¸ì¤„
 	{
 		LetterColor(WHITE);
-		printf("¦£ ");
+		printf("â”Œ ");
 	}
 	else if (board[0][0] == 1)
 	{
 		LetterColor(BLACK);
-		printf("¡Ü");
+		printf("â—");
 		LetterColor(WHITE);
 	}
 	else if (board[0][0] == -1)
 	{
 		LetterColor(WHITE);
-		printf("¡Ü");
+		printf("â—");
 	}
 	for (int i = 1; i < 18; i++)
 	{
 		if (board[0][i] == 0)
 		{
 			LetterColor(WHITE);
-			printf("¦¨ ");
+			printf("â”¬ ");
 		}
 		else if (board[0][i] == 1)
 		{
 			LetterColor(BLACK);
-			printf("¡Ü");
+			printf("â—");
 			LetterColor(WHITE);
 		}
 		else if (board[0][i] == -1)
 		{
 			LetterColor(WHITE);
-			printf("¡Ü");
+			printf("â—");
 		}
 	}
 	if (board[0][18] == 0)
 	{
 		LetterColor(WHITE);
-		printf("¦¤ ");
+		printf("â” ");
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 		printf(" 0\n");
 	}
 	else if (board[0][18] == 1)
 	{
 		LetterColor(BLACK);
-		printf("¡Ü");
+		printf("â—");
 		LetterColor(WHITE);
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 		printf(" %d\n", 0);
@@ -69,86 +69,86 @@ void Board(void)				//¿À¸ñÆÇ ÇÔ¼ö
 	else if (board[0][18] == -1)
 	{
 		LetterColor(WHITE);
-		printf("¡Ü");
+		printf("â—");
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 		printf(" %d\n", 0);
-	}									//¿©±â±îÁö°¡ Ã¹¹øÂ°ÁÙ
+	}									//ì—¬ê¸°ê¹Œì§€ê°€ ì²«ë²ˆì§¸ì¤„
 
-	for (int i = 1; i < 18; i++)		//µÎ¹øÂ°ÁÙºÎÅÍ 18¹øÂ°ÁÙ±îÁö
+	for (int i = 1; i < 18; i++)		//ë‘ë²ˆì§¸ì¤„ë¶€í„° 18ë²ˆì§¸ì¤„ê¹Œì§€
 	{
 		if (board[i][0] == 0)
 		{
 			LetterColor(WHITE);
-			printf("¦§ ");
+			printf("â”œ ");
 		}
 		else if (board[i][0] == 1)
 		{
 			LetterColor(BLACK);
-			printf("¡Ü");
+			printf("â—");
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 		}
 		else if (board[i][0] == -1)
 		{
 			LetterColor(WHITE);
-			printf("¡Ü");
+			printf("â—");
 		}
 		for (int j = 1; j < 18; j++)
 		{
 			if (board[i][j] == 0)
 			{
 				LetterColor(WHITE);
-				printf("¦« ");
+				printf("â”¼ ");
 			}
 			else if (board[i][j] == 1)
 			{
 				LetterColor(BLACK);
-				printf("¡Ü");
+				printf("â—");
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 			}
 			else if (board[i][j] == -1)
 			{
 				LetterColor(WHITE);
-				printf("¡Ü");
+				printf("â—");
 			}
 		}
 		if (board[i][18] == 0)
 		{
 			LetterColor(WHITE);
-			printf("¦© ");
+			printf("â”¤ ");
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 			printf(" %d\n", i);
 		}
 		else if (board[i][18] == 1)
 		{
 			LetterColor(BLACK);
-			printf("¡Ü");
+			printf("â—");
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 			printf(" %d\n", i);
 		}
 		else if (board[i][18] == -1)
 		{
 			LetterColor(WHITE);
-			printf("¡Ü");
+			printf("â—");
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 			printf(" %d\n", i);
 		}
-	}									//¿©±â±îÁö°¡ µÎ¹øÂ°ÁÙ
+	}									//ì—¬ê¸°ê¹Œì§€ê°€ ë‘ë²ˆì§¸ì¤„
 
-	if (board[18][0] == 0)	//¸¶Áö¸·¹øÂ°ÁÙ
+	if (board[18][0] == 0)	//ë§ˆì§€ë§‰ë²ˆì§¸ì¤„
 	{
 		LetterColor(WHITE);
-		printf("¦¦ ");
+		printf("â”” ");
 	}
 	else if (board[18][0] == 1)
 	{
 		LetterColor(BLACK);
-		printf("¡Ü");
+		printf("â—");
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 	}
 	else if (board[18][0] == -1)
 	{
 		LetterColor(WHITE);
-		printf("¡Ü");
+		printf("â—");
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 	}
 	for (int i = 1; i < 18; i++)
@@ -156,19 +156,19 @@ void Board(void)				//¿À¸ñÆÇ ÇÔ¼ö
 		if (board[18][i] == 0)
 		{
 			LetterColor(WHITE);
-			printf("¦ª ");
+			printf("â”´ ");
 		}
 		else if (board[18][i] == 1)
 		{
 			LetterColor(BLACK);
-			printf("¡Ü");
+			printf("â—");
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 			printf(" %d\n", i);
 		}
 		else if (board[18][i] == -1)
 		{
 			LetterColor(WHITE);
-			printf("¡Ü");
+			printf("â—");
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 			printf(" %d\n", i);
 		}
@@ -176,27 +176,27 @@ void Board(void)				//¿À¸ñÆÇ ÇÔ¼ö
 	if (board[18][18] == 0)	
 	{
 		LetterColor(WHITE);
-		printf("¦¥ ");
+		printf("â”˜ ");
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
-		printf(" 18 -- yÁÂÇ¥ \n");
+		printf(" 18 -- yì¢Œí‘œ \n");
 	}
 	else if (board[18][18] == 1)
 	{
 		LetterColor(BLACK);
-		printf("¡Ü");
+		printf("â—");
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 		printf(" 18\n");
 	}
 	else if (board[18][18] == -1)
 	{
 		LetterColor(WHITE);
-		printf("¡Ü");
+		printf("â—");
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 		printf(" 18\n");
-	}								//¿©±â±îÁö°¡ ¸¶Áö¸·¹øÂ°ÁÙ
+	}								//ì—¬ê¸°ê¹Œì§€ê°€ ë§ˆì§€ë§‰ë²ˆì§¸ì¤„
 }
 int main(void) {					
-	Board();						//¿À¸ñÆÇ Ãâ·ÂÇÔ¼ö
+	Board();						//ì˜¤ëª©íŒ ì¶œë ¥í•¨ìˆ˜
 
 	return 0;
 }
