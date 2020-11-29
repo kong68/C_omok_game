@@ -23,24 +23,26 @@
 
 int board[19][19] = { 0 };
 
-void LetterColor(int color) { // 오목돌 색 변경함수
+void LetterColor(int color) { // 오목돌 색 변경
 	if (color == WHITE)
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (2 << 4) + WHITE);
 	else if (color == BLACK)
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BLACK);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (2 << 4) + BLACK);
 }
 
-void Board(void)		//오목판 
+void Board(void)				//오목판 함수
 {
 	printf("ⓞ①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮ⓐⓑⓒ -- x좌표\n");
 	if (board[0][0] == 0)	//첫번째줄
 	{
+		LetterColor(WHITE);
 		printf("┌ ");
 	}
-	else if (board[0][0] == 1)
+	if (board[0][0] == 1)
 	{
 		LetterColor(BLACK);
 		printf("●");
+		LetterColor(WHITE);
 	}
 	else if (board[0][0] == -1)
 	{
@@ -51,12 +53,14 @@ void Board(void)		//오목판
 	{
 		if (board[0][i] == 0)
 		{
+			LetterColor(WHITE);
 			printf("┬ ");
 		}
 		else if (board[0][i] == 1)
 		{
 			LetterColor(BLACK);
 			printf("●");
+			LetterColor(WHITE);
 		}
 		else if (board[0][i] == -1)
 		{
@@ -66,29 +70,37 @@ void Board(void)		//오목판
 	}
 	if (board[0][18] == 0)
 	{
-		printf("┐ 0\n");
+		LetterColor(WHITE);
+		printf("┐ ");
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
+		printf(" 0\n");
 	}
 	else if (board[0][18] == 1)
 	{
 		LetterColor(BLACK);
 		printf("●");
+		LetterColor(WHITE);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 	}
 	else if (board[0][18] == -1)
 	{
 		LetterColor(WHITE);
 		printf("●");
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 	}									//여기까지가 첫번째줄
 
 	for (int i = 1; i < 18; i++)		//두번째줄부터 18번째줄까지
 	{
 		if (board[i][0] == 0)
 		{
+			LetterColor(WHITE);
 			printf("├ ");
 		}
 		else if (board[i][0] == 1)
 		{
 			LetterColor(BLACK);
 			printf("●");
+			LetterColor(WHITE);
 		}
 		else if (board[i][0] == -1)
 		{
@@ -99,12 +111,14 @@ void Board(void)		//오목판
 		{
 			if (board[i][j] == 0)
 			{
+				LetterColor(WHITE);
 				printf("┼ ");
 			}
 			else if (board[i][j] == 1)
 			{
 				LetterColor(BLACK);
 				printf("●");
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 			}
 			else if (board[i][j] == -1)
 			{
@@ -114,12 +128,16 @@ void Board(void)		//오목판
 		}
 		if (board[i][18] == 0)
 		{
-			printf("┤ %d\n", i);
+			LetterColor(WHITE);
+			printf("┤ ");
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
+			printf(" %d\n", i);
 		}
 		else if (board[i][18] == 1)
 		{
 			LetterColor(BLACK);
 			printf("●");
+			LetterColor(WHITE);
 		}
 		else if (board[i][18] == -1)
 		{
@@ -130,33 +148,41 @@ void Board(void)		//오목판
 
 	if (board[18][0] == 0)	//마지막번째줄
 	{
+		LetterColor(WHITE);
 		printf("└ ");
 	}
 	else if (board[18][0] == 1)
 	{
 		LetterColor(BLACK);
 		printf("●");
+		LetterColor(WHITE);
 	}
 	else if (board[18][0] == -1)
 	{
 		LetterColor(WHITE);
 		printf("●");
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 	}
 	for (int i = 1; i < 18; i++)
 	{
 		if (board[18][i] == 0)
 		{
+			LetterColor(WHITE);
 			printf("┴ ");
 		}
 	}
 	if (board[18][18] == 0)	
 	{
-		printf("┘ 18 -- y좌표\n");
+		LetterColor(WHITE);
+		printf("┘ ");
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
+		printf(" 18 -- y좌표 \n");
 	}
 	else if (board[18][18] == 1)
 	{
 		LetterColor(BLACK);
 		printf("●");
+		LetterColor(WHITE);
 	}
 	else if (board[18][18] == -1)
 	{
@@ -164,8 +190,8 @@ void Board(void)		//오목판
 		printf("●");
 	}								//여기까지가 마지막번째줄
 }
-int main(void) {
-	Board();		//오목판함수 
+int main(void) {					
+	Board();						//오목판 출력함수
 
 	return 0;
 }
