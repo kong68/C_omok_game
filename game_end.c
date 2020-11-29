@@ -5,13 +5,13 @@ int game_end(int(*Board)[19]) {
 		for (j = 0; j < 20; j++) {
 			if (Board[j][i - 2] == 1 && Board[j][i - 1] == 1 && Board[j][i] == 1 && Board[j][i + 1] == 1 && Board[j][i + 2] == 1) {
 
-				printf("¼±°ø ½Â¸®");
+				printf("ì„ ê³µ ìŠ¹ë¦¬");
 
 				return 1;
 			}
 			else if (Board[j][i - 2] == -1 && Board[j][i - 1] == -1 && Board[j][i] == -1 && Board[j][i + 1] == -1 && Board[j][i + 2] == -1) {
 
-				printf("ÈÄ°ø ½Â¸®");
+				printf("í›„ê³µ ìŠ¹ë¦¬");
 
 				return 1;
 			}
@@ -22,13 +22,13 @@ int game_end(int(*Board)[19]) {
 
 			if (Board[i - 2][j] == 1 && Board[i - 1][j] == 1 && Board[i][j] == 1 && Board[i + 1][j] == 1 && Board[i + 2][j] == 1) {
 
-				printf("¼±°ø ½Â¸®");
+				printf("ì„ ê³µ ìŠ¹ë¦¬");
 
 				return 1;
 			}
 			else if (Board[i - 2][j] == -1 && Board[i - 1][j] == -1 && Board[i][j] == -1 && Board[i + 1][j] == -1 && Board[i + 2][j] == -1) {
 
-				printf("ÈÄ°ø ½Â¸®");
+				printf("í›„ê³µ ìŠ¹ë¦¬");
 
 				return 1;
 			}
@@ -40,12 +40,12 @@ int game_end(int(*Board)[19]) {
 		for (j = 2; j < 18; j++) {
 			if (Board[j - 2][i - 2] == 1 && Board[j - 1][i - 1] == 1 && Board[j][i] == 1 && Board[j + 1][i + 1] == 1 && Board[j + 2][i + 2] == 1) {
 
-				printf("¼±°ø ½Â¸®");
+				printf("ì„ ê³µ ìŠ¹ë¦¬");
 
 				return 1;
 			}
 			else if (Board[j - 2][i - 2] == -1 && Board[j - 1][i - 1] == -1 && Board[j][i] == -1 && Board[j + 1][i + 1] == -1 && Board[j + 2][i + 2] == -1) {
-				printf("ÈÄ°ø ½Â¸®");
+				printf("í›„ê³µ ìŠ¹ë¦¬");
 
 				return 1;
 			}
@@ -57,13 +57,13 @@ int game_end(int(*Board)[19]) {
 
 			if (Board[j + 2][i - 2] == 1 && Board[j + 1][i - 1] == 1 && Board[j][i] == 1 && Board[j - 1][i + 1] == 1 && Board[j - 2][i + 2] == 1) {
 
-				printf("¼±°ø ½Â¸®");
+				printf("ì„ ê³µ ìŠ¹ë¦¬");
 
 				return 1;
 			}
 			else if (Board[j + 2][i - 2] == -1 && Board[j + 1][i - 1] == -1 && Board[j][i] == -1 && Board[j - 1][i + 1] == -1 && Board[j - 2][i + 2] == -1) {
 
-				printf("ÈÄ°ø ½Â¸®");
+				printf("í›„ê³µ ìŠ¹ë¦¬");
 
 				return 1;
 			}
