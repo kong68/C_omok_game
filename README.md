@@ -23,7 +23,7 @@
 
 int board[19][19] = { 0 };
 
-void LetterColor(int color) { // 배경색이 검은색인 글씨색 변경
+void LetterColor(int color) { // 오목돌 색 변경함수
 	if (color == WHITE)
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 	else if (color == BLACK)
