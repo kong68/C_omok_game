@@ -8,31 +8,31 @@
 int BaskinRobbins(void)
 {
 	srand((unsigned) time(NULL));
-	//a�� ������ �����ִ� ������ �����ϴ� �����Դϴ�. MaxCnt�� 1~3������ �Է¹��� ���� �����մϴ�. Value�� 1~31���� ������Ű�鼭 ������ݴϴ�.
+	//a는 순서를 정해주는 난수를 저장하는 변수입니다. MaxCnt는 1~3까지의 입력받은 값을 저장합니다. Value는 1~31까지 증가시키면서 출력해줍니다.
 	int a, MaxCnt, Value; 
 	char AB[2] = { 'A', 'B' };
 	
 	Value = 1;
-	a = rand() % 2;		//a�� 0�̸� A�� ��, 1�̸� B�� ���̴�.
+	a = rand() % 2;		//a가 0이면 A의 턴, 1이면 B의 턴이다.
 
-	printf("������ ����Ų���31�Դϴ�.\n");
+	printf("게임은 베스킨라빈스31입니다.\n");
 	printf("\n\t\t<--Baskin_Rabins_31-->\n\n"
 		" ====================[How To Play]====================\n"
-		" [1] 1���� �����ؼ� 31���� �����ư��� ���ڸ� �θ���.\n"
-		" [2] �ѹ��� �ִ� 3������ ���ӵ� ���ڸ� ���� �� �ִ�.\n"
-		" [3] 31�� ���ϴ� �÷��̾ ���ӿ��� �й��Ѵ�.\n"
+		" [1] 1부터 시작해서 31까지 번갈아가며 숫자를 부른다.\n"
+		" [2] 한번에 최대 3번까지 연속된 숫자를 말할 수 있다.\n"
+		" [3] 31을 말하는 플레이어가 게임에서 패배한다.\n"
 		" =====================================================\n\n");
-	printf("	[������ �������� %c�� ���� �Դϴ�.]\n", AB[a]);
-	printf("     ���� �Է��� 1~3���� �Է��� �� �ֽ��ϴ�.\n\n");
+	printf("	[선공은 랜덤으로 %c가 먼저 입니다.]\n", AB[a]);
+	printf("     숫자 입력은 1~3까지 입력할 수 있습니다.\n\n");
 
 	puts("");
 
-	printf("	Enter�� ������ ������ ���۵˴ϴ�.");
+	printf("	Enter를 누르면 게임이 시작됩니다.");
 	
 	while (1)
 	{
 		int key;
-		if (_kbhit()) // ����Ű�� �Է¹޾��� �� ���ѷ��� Ż��
+		if (_kbhit()) // 엔터키를 입력받았을 때 무한루프 탈출
 		{
 			key = _getch();
 			if (key == 13)
@@ -46,8 +46,8 @@ int BaskinRobbins(void)
 	while (1)
 	{
 		puts("");
-		printf("%c�� ���Դϴ�.\n", AB[a]);		
-		switch (a)		//������ �ٲ��ִ� �ڵ�
+		printf("%c의 턴입니다.\n", AB[a]);		
+		switch (a)		//순서를 바꿔주는 코드
 		{
 			case 0: {
 				++a;
@@ -61,21 +61,21 @@ int BaskinRobbins(void)
 
 		puts("======================================");
 
-		printf("���� ��� �Է��Ͻðڽ��ϱ�? : ");
+		printf("숫자 몇개를 입력하시겠습니까? : ");
 		scanf_s("%d", &MaxCnt);
 		
-		if (MaxCnt > 3 || MaxCnt < 0)					//�Է��� ���� 0���� �۰� 3���� ũ�� �ٽ� �Է��ϵ��� �մϴ�.
+		if (MaxCnt > 3 || MaxCnt < 0)					//입력한 값이 0보다 작고 3보다 크면 다시 입력하도록 합니다.
 		{
 			while (MaxCnt > 3 || MaxCnt < 0)
 			{
-				printf("1 ~ 3���� �ٽ� �Է����ּ���. : ");
+				printf("1 ~ 3까지 다시 입력해주세요. : ");
 				scanf_s("%d", &MaxCnt);
 			}
 		}
 			
-		printf("�Է¹��� ���� : ");
+		printf("입력받은 숫자 : ");
 
-		for (int i = 0; i < MaxCnt; i++)
+		for (int i = 0; i < MaxCnt; i++)		//MaxCnt만큼 반복시켜 줍니다. 반복시키면서 Value(1부터)를 1씩증가시켜 출력시켜줍니다.
 		{
 			printf("%d ", Value);
 			Value++;
@@ -92,7 +92,7 @@ int BaskinRobbins(void)
 
 		if (Value == Turn + 1)
 		{
-			printf("%c�� �¸��Դϴ�.", AB[a]);
+			printf("%c의 승리입니다.", AB[a]);
 			break;
 		}
 	}
