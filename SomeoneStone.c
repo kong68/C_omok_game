@@ -16,7 +16,7 @@ void SomeoneStone(int Stone)
 			Board();
 			break;
 		}
-		else if ((Value == Stone) || (board[X][Y] == 0))			//상대방의 돌과 색이 같으면 좌표를 다시 선택할 수 있습니다.
+		else if ((Value == Stone) || (Value == 0))			//상대방의 돌과 색이 같으면 좌표를 다시 선택할 수 있습니다.
 		{
 			printf("자신의 돌을 선택하거나 빈 공간입니다. 다시 입력해주세요. : ");
 			scanf_s("%d %d", &X, &Y);
