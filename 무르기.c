@@ -1,24 +1,24 @@
 #include <stdio.h>
 #include <Windows.h>
 
-void ReturnStone(int Win, int Stone)
+void ReturnStone(int Stone)
 {
 	int X = 0, Y = 0, Value;
 
-	printf("¹«¸£±â¸¦ »ç¿ëÇÒ ÁÂÇ¥¸¦ ÀÔ·ÂÇÏ¼¼¿ä. : ");
+	printf("ë¬´ë¥´ê¸°ë¥¼ ì‚¬ìš©í•  ì¢Œí‘œë¥¼ ì…ë ¥í•˜ì„¸ìš”. : ");
 	scanf_s("%d %d", &X, &Y);
 	Value = board[X][Y];
 	system("Cls");
 
 	while (1)
 	{
-		if (Stone == Value)		//¼±ÅÃÇÑµ¹°ú »ç¿ëÀÚÀÇ µ¹»öÀÌ °°À¸¸é ±× µ¹À» ¾ø¾Ö°í ´Ù½Ã µÑ ¼ö ÀÖ½À´Ï´Ù.
+		if (Stone == Value)		//ì„ íƒí•œëŒê³¼ ì‚¬ìš©ìì˜ ëŒìƒ‰ì´ ê°™ìœ¼ë©´ ê·¸ ëŒì„ ì—†ì• ê³  ë‹¤ì‹œ ë‘˜ ìˆ˜ ìˆìŠµë‹ˆë‹¤.
 		{
 			board[X][Y] = 0;
 			Board();
 
 			
-			printf("¼ö¸¦ ´Ù½Ã ³öµÑ ÁÂÇ¥¸¦ ÀÔ·ÂÇÏ½Ã¿À. : ");
+			printf("ìˆ˜ë¥¼ ë‹¤ì‹œ ë†”ë‘˜ ì¢Œí‘œë¥¼ ì…ë ¥í•˜ì‹œì˜¤. : ");
 			scanf("%d %d", &X, &Y);
 			board[X][Y] = Value;
 
@@ -28,7 +28,7 @@ void ReturnStone(int Win, int Stone)
 		}
 		else if (Stone != Value)
 		{
-			printf("¼±ÅÃÇÑ µ¹ÀÌ ÀÚ½ÅÀÇ µ¹ »ö°ú ´Ù¸§´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä. : ");
+			printf("ì„ íƒí•œ ëŒì´ ìì‹ ì˜ ëŒ ìƒ‰ê³¼ ë‹¤ë¦„ë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì„¸ìš”. : ");
 			scanf_s("%d %d", &X, &Y);
 			Value = board[X][Y];
 		}
@@ -37,6 +37,6 @@ void ReturnStone(int Win, int Stone)
 
 int main(void)
 {
-	ReturnStone(MiniGame, StoneColor);		//¹Ì´Ï°ÔÀÓ¿¡¼­ ¹İÈ¯µÈ 1 ¶Ç´Â 0À» ÀÔ·ÂÀ» ¹Ş½À´Ï´Ù. StoneColorÀº ¹«¸£±â¸¦ »ç¿ëÇÏ´Â »ç¿ëÀÚÀÇ µ¹»öÀÔ´Ï´Ù. ¹«¸£±â¸¦ ÇÒ¶§ »ó´ë¹æÀÇ µ¹À» ¼±ÅÃÇÏÁö ¾Ê°Ô ¹æÁöÇÏ±â À§ÇÔÀÔ´Ï´Ù.
+	ReturnStone(StoneColor);		//StoneColorì€ ë¬´ë¥´ê¸°ë¥¼ ì‚¬ìš©í•˜ëŠ” ì‚¬ìš©ìì˜ ëŒìƒ‰ì…ë‹ˆë‹¤. ë¬´ë¥´ê¸°ë¥¼ í• ë•Œ ìƒëŒ€ë°©ì˜ ëŒì„ ì„ íƒí•˜ì§€ ì•Šê²Œ ë°©ì§€í•˜ê¸° ìœ„í•¨ì…ë‹ˆë‹¤.
 	return 0;
 }
