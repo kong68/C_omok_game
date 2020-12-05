@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
-#include <conio.h>
 
 #define Turn 31
 
@@ -25,23 +24,8 @@ int BaskinRobbins(void)
 	printf("	[선공은 랜덤으로 %c가 먼저 입니다.]\n", AB[a]);
 	printf("     숫자 입력은 1~3까지 입력할 수 있습니다.\n\n");
 
-	puts("");
-
-	printf("	Enter를 누르면 게임이 시작됩니다.");
 	
-	while (1)
-	{
-		int key;
-		if (_kbhit()) // 엔터키를 입력받았을 때 무한루프 탈출
-		{
-			key = _getch();
-			if (key == 13)
-			{
-				system("cls");
-				break;
-			}
-		}
-	}
+	
 
 	while (1)
 	{
