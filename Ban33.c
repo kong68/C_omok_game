@@ -76,20 +76,10 @@ int checkOpen4(int _x, int _y, int _dir)
 	blankDdh = (blankXh > blankYl) ? blankYl : blankXh;
 	blankDul = (blankXl > blankYl) ? blankYl : blankXl;
 	blankDuh = (blankXh > blankYh) ? blankYh : blankXh;
-
-	//printf("Xh: %d, Xl: %d, Yh: %d, Yh: %d\n", blankXh, blankXl, blankYh, blankYl);
-	//printf("Uh: %d, Ul: %d, Dh: %d, dh: %d\n", blankDuh, blankDul, blankDdh, blankDdl);
-
-	// l, h 값에 따라 판독은 다음과 같이 일어난다.
-	//		0: 판독할 값이 없으므로 판독하지 않는다
-	//		1: [1]거리의 돌이 change와 같은 값일 경우 열린4가 아니다.
-	//		2: [1]거리의 돌이 change와 같은 값일 경우 열린4가 아니다. [2]거리의 돌이 change와 같은 경우, [1]거리가 공백이면 열린4가 아니다.
-
-
+	
 	switch (_dir) {
 		// 1. 가로 판독 (시작점 _y = 0~ 13)
 	case 0:
-		printf("가로 판독 시작...\n");
 		if (_x <= 13) {
 			if (board[_y][_x] == 0 && board[_y][_x + 1] == change && board[_y][_x + 2] == change && board[_y][_x + 3] == change && board[_y][_x + 4] == change && board[_y][_x + 5] == 0) {
 				if (blankXl == 2 && blankXh != 2) {
@@ -129,13 +119,10 @@ int checkOpen4(int _x, int _y, int _dir)
 				}
 			}
 		}
-		if (result > 0)
-			printf("가로방향 열린4 찾음\n");
 		break;
 
 		// 2. 세로 판독 (시작점 _x = 0 ~ 13)
 	case 1:
-		printf("세로 판독 시작...\n");
 		if (_y <= 13) {
 			if (board[_y][_x] == 0 && board[_y + 1][_x] == change && board[_y + 2][_x] == change && board[_y + 3][_x] == change && board[_y + 4][_x] == change && board[_y + 5][_x] == 0) {
 				if (blankYl == 2 && blankYh != 2) {
@@ -175,13 +162,10 @@ int checkOpen4(int _x, int _y, int _dir)
 				}
 			}
 		}
-		if (result > 0)
-			printf("가로방향 열린4 찾음\n");
 		break;
 
 		// 3. 상향대각선 판독 (시작점 (_x, _y)에 대해서 _x = 0 ~ 12, _y = 0 ~ 12)
 	case 2:
-		printf("상향 대각선 판독 시작...\n");
 		if ((_x >= 0 && _x <= 12) && (_y >= 0 && _y <= 12)) {
 			if (board[_y][_x] == 0 && board[_y + 1][_x + 1] == change && board[_y + 2][_x + 2] == change && board[_y + 3][_x + 3] == change && board[_y + 4][_x + 4] == change && board[_y + 5][_x + 5] == 0) {
 				if (blankDul == 2 && blankDuh != 2) {
@@ -221,8 +205,6 @@ int checkOpen4(int _x, int _y, int _dir)
 				}
 			}
 		}
-		if (result > 0)
-			printf("상향 대각선 방향 열린4 찾음\n");
 		break;
 
 		// 4. 하향대각선 판독 (시작점 (_x, _y)에 대해서 _x = 0 ~ 12, _y = 0 ~ 12)
@@ -267,8 +249,6 @@ int checkOpen4(int _x, int _y, int _dir)
 				}
 			}
 		}
-		if (result > 0)
-			printf("하향 대각선 방향 열린4 찾음\n");
 		break;
 
 	default:
@@ -282,31 +262,10 @@ int checkOpen4(int _x, int _y, int _dir)
 int ban33 (int _x, int _y) {
     int num3 = 0;  // 열린 3의 개수를 받는 변수
 	int temp = board[_y][_x];		// (_x, _y)의 자료값을 임시 저장하는 변수
-	board[_y][_x] = change;			// (_x, _y)의 값을 현재 플레이어의 값으로 변경
-
-	/*
-    // 열린3: 한 수를 더 두어서 열린4를 만들 수 있다.
-    // 열린4: 네 돌이 연속으로 있고, [다른돌/벽/빈칸+같은색돌]과 1칸 이상의 공백을 가진다. 따라서 열린4는 [공/돌/돌/돌/돌/공]으로 6의 크기를 가진다.
-	// 열린4의 가장 낮은 숫자 ( ex: [5~8]일 경우 5)를 대표수로 생각하면, 열린 4는 각 줄마다 0 ~ 13가 있다.
-	// 열린4의 대표수에 따라서, 열린4의 판정조건은 다음과 같다.
-	//		[0]: 낮은 숫자가 없기 때문에, 높은 쪽 끝을 확인한다. (1)
-	//		[1]: -1의 숫자가 같은 색인 경우, 6목이기 때문에 낮은 쪽으로는 오목을 완성할 수 없다.(x) 따라서 열린4가 아니다. 높은 쪽 끝을 확인한다. (1)
-	//	 [2~11]: -2의 숫자가 같은 색인 경우, -1의 숫자가 공백이어야 열린4이다.
-	//			 -1의 숫자가 같은 색인 경우에는 불가능하다.
-	//			 +1의 숫자가 같은 색인 경우에는 불가능하다.
-	//			 +2의 숫자가 같은 색인 경우, +1의 숫자가 공백이어야 열린4이다.
-	//		[12]: +1의 숫자가 같은 색인 경우, 6목이기 때문에 낮은 쪽으로는 오목을 완성할 수 없다. 따라서 열린4가 아니다. 낮은 쪽 끝을 확인한다. (1)
-	//		[13]: 높은 숫자가 없기 때문에, 낮은 쪽 끝을 확인한다. (1)
-	// * (1): 2: 같은 색인 경우, 1이 공백이 아닐경우 오목을 완성할 수 없다.
-	//		  1: 같은 색인 경우, 6목이기 때문에 해당 방향으로는 오목을 완성할 수 없다.
-    // 각 방향별로 확인법
-    // 1. 해당 방향에서 막힌 수 (다른 색의 돌, 판의 경계)를 만나거나, 2개 연속 빈칸이거나, 거리가 4일때 그만 읽음
-    // 2. 각 방향의 길이가 6 미만이면 성립하지 않음. (+0)
-    // 3. 각 방향의 길이가 6 이상이고, 해당 좌표에 돌을 두었을 때, 열린4가 완성되는 경우, 해당 위치는 열린3이다.
-	*/
-	
 	int BlankXl, BlankYl, BlankXh, BlankYh;				// 왼쪽/위쪽/오른쪽/아래쪽 벽과의 거리 확인변수
 	int BlankDul, BlankDuh, BlankDdl, BlankDdh;			// 우하단, 우상단 방향으로의 대각선 거리 확인변수
+	
+	board[_y][_x] = change;			// (_x, _y)의 값을 현재 플레이어의 값으로 변경
 
 	// 벽과의 거리를 1, 2, 3, 4, 15, 16, 17, ect로 반환하는 함수.
 	// 벽과의 거리에 따라서 판독법을 변경한다
