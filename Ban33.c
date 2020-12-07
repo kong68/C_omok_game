@@ -8,23 +8,83 @@ int board[19][19] = { 0 };
 int change = 0;
 int win = 0;
 
-// (_x, _y)를 시작점으로 하는 _dir 방향의 열린4의 존재여부를 0/1로 반환하는 함수
-// 0, 1, 2, 3 순으로 각각 가로, 세로, 상향, 하향이다.
+// 열린4를 만드는 함수. checkOpen4와 양식 같음
+int makeOpen4(int locX, int locY, int dir) {
+	int numVoid = 0;
+	int swit;
+	switch (dir) {
+	case 0:
+		for (swit = 0; swit < 4; swit++) {
+			if (board[locY][locX + swit] == 0) {
+				if (numVoid < 2) {
+					board[locY][locX + swit] == 1 - 2 * change;
+					numVoid++;
+				}
+				else
+					return -1;
+			}
+		}
+		break;
+	case 1:
+		for (int ii = 0; ii < 4; ii++) {
+			if (board[locY + swit][locX] == 0) {
+				if (numVoid < 2) {
+					board[locY + swit][locX] == 1 - 2 * change;
+					numVoid++;
+				}
+				else
+					return -1;
+			}
+
+		}
+		break;
+	case 2:
+		for (int ii = 0; ii < 4; ii++) {
+			if (board[locY + swit][locX + swit] == 0) {
+				if (numVoid < 2) {
+					board[locY + swit][locX + swit] == 1 - 2 * change;
+					numVoid++;
+				}
+				else
+					return -1;
+			}
+		}
+		break;
+	case 3:
+		for (int ii = 0; ii < 4; ii++) {
+			if (board[locY - swit][locX + swit] == 0) {
+				if (numVoid < 2) {
+					board[locY][locX + swit] == 1 - 2 * change;
+					numVoid++;
+				}
+				else
+					return -1;
+			}
+		}
+		break;
+	default:
+		break;
+	}
+	return 1;
+}
+
 // (_x, _y)를 시작점으로 하는 _dir 방향의 열린4의 존재여부를 0/1로 반환하는 함수
 // 0, 1, 2, 3 순으로 각각 가로, 세로, 상향, 하향이다.
 int checkOpen4(int _x, int _y, int _dir)
 {
-	int result = 0;
+	int result, Col;
 	int blankXl, blankYl, blankXh, blankYh;				// 왼쪽/위쪽/오른쪽/아래쪽 벽과의 거리 확인변수
 	int blankDul, blankDuh, blankDdl, blankDdh;			// 우하단, 우상단 방향으로의 대각선 거리 확인변수
 
+	result = 0;
 
-	// 벽과의 거리를 0, 1, 2+로 반환하는 함수.
-	//		0: Xl = 0, Xh = 2
-	//		1: Xl = 1, Xh = 2
-	// 2 ~ 11: Xl = 2, Xh = 2
-	//	   12: Xl = 2. Xh = 1
-	//	   13: Xl = 2, Xh = 0
+	if (change == 1) {
+		Col = -1;
+	}
+	if (change == 0) {
+		Col = 1;
+	}
+
 	switch (_x) {
 	case 0:
 		blankXl = 0;
@@ -76,21 +136,28 @@ int checkOpen4(int _x, int _y, int _dir)
 	blankDdh = (blankXh > blankYl) ? blankYl : blankXh;
 	blankDul = (blankXl > blankYl) ? blankYl : blankXl;
 	blankDuh = (blankXh > blankYh) ? blankYh : blankXh;
-	
+
+	// l, h 값에 따라 판독은 다음과 같이 일어난다.
+	//		0: 판독할 값이 없으므로 판독하지 않는다
+	//		1: [1]거리의 돌이 Color과 다른 값일 경우 열린4다.
+	//		2: [1]거리의 돌이 공백이면, [2]거리의 돌이 Color이 아닌경우 열린4다. [1]거리의 돌이 Color의 역인 경우, 열린4다.
+
 	switch (_dir) {
 		// 1. 가로 판독 (시작점 _y = 0~ 13)
 	case 0:
+		printf("가로 판독 시작...\n");
+		printf("(%d, %d) ~ (%d, %d)를 탐색합니다.\n", _x, _y, _x + 5, _y);
 		if (_x <= 13) {
-			if (board[_y][_x] == 0 && board[_y][_x + 1] == change && board[_y][_x + 2] == change && board[_y][_x + 3] == change && board[_y][_x + 4] == change && board[_y][_x + 5] == 0) {
+			if (board[_y][_x] == 0 && board[_y][_x + 1] == Col && board[_y][_x + 2] == Col && board[_y][_x + 3] == Col && board[_y][_x + 4] == Col && board[_y][_x + 5] == 0) {
 				if (blankXl == 2 && blankXh != 2) {
 					if (blankXh == 0) {
-						if (board[_y][_x - 1] != change || (board[_y][_x - 1] == 0 && board[_y][_x - 2] == change)) {
+						if (board[_y][_x - 1] == -Color || (board[_y][_x - 1] == 0 && board[_y][_x - 2] != Color)) {
 							result++;
 						}
 					}
 					else if (blankXh == 1) {
-						if (board[_y][_x + 6] != change) {
-							if (board[_y][_x - 1] != change || (board[_y][_x - 1] == 0 && board[_y][_x - 2] == change)) {
+						if (board[_y][_x + 6] != Color) {
+							if (board[_y][_x - 1] == -Color || (board[_y][_x - 1] == 0 && board[_y][_x - 2] != Color)) {
 								result++;
 							}
 						}
@@ -98,42 +165,46 @@ int checkOpen4(int _x, int _y, int _dir)
 				}
 				if (blankXh == 2 && blankXl != 2) {
 					if (blankXl == 0) {
-						if (board[_y][_x + 6] != change || (board[_y][_x + 6] == 0 && board[_y][_x + 7] == change)) {
+						if (board[_y][_x + 6] == -Color || (board[_y][_x + 6] == 0 && board[_y][_x + 7] != Color)) {
 							result++;
 						}
 					}
 					else if (blankXl == 1) {
-						if (board[_y][_x - 1] != change) {
-							if (board[_y][_x + 6] != change || (board[_y][_x + 6] == 0 && board[_y][_x + 7] == change)) {
+						if (board[_y][_x - 1] != Color) {
+							if (board[_y][_x + 6] == -Color || (board[_y][_x + 6] == 0 && board[_y][_x + 7] != Color)) {
 								result++;
 							}
 						}
 					}
 				}
 				if (blankXl == 2 && blankXh == 2) {
-					if (board[_y][_x + 6] != change || (board[_y][_x + 6] == 0 && board[_y][_x + 7] == change)) {
-						if (board[_y][_x - 1] != change || (board[_y][_x - 1] == 0 && board[_y][_x - 2] == change)) {
+					if (board[_y][_x + 6] == -Color || (board[_y][_x + 6] == 0 && board[_y][_x + 7] != Color)) {
+						if (board[_y][_x - 1] == -Color || (board[_y][_x - 1] == 0 && board[_y][_x - 2] != Color)) {
 							result++;
 						}
 					}
 				}
 			}
 		}
+		if (result > 0)
+			printf("가로방향 열린4 찾음(%d%d)\n", blankXl, blankXh);
 		break;
 
 		// 2. 세로 판독 (시작점 _x = 0 ~ 13)
 	case 1:
+		printf("세로 판독 시작...\n");
+		printf("(%d, %d) ~ (%d, %d)를 탐색합니다.\n", _x, _y, _x, _y+5);
 		if (_y <= 13) {
-			if (board[_y][_x] == 0 && board[_y + 1][_x] == change && board[_y + 2][_x] == change && board[_y + 3][_x] == change && board[_y + 4][_x] == change && board[_y + 5][_x] == 0) {
+			if (board[_y][_x] == 0 && board[_y + 1][_x] == Col && board[_y + 2][_x] == Col && board[_y + 3][_x] == Col && board[_y + 4][_x] == Col && board[_y + 5][_x] == 0) {
 				if (blankYl == 2 && blankYh != 2) {
 					if (blankYh == 0) {
-						if (board[_y - 1][_x] != change || (board[_y - 1][_x] == 0 && board[_y - 2][_x] == change)) {
+						if (board[_y - 1][_x] == -Color || (board[_y - 2][_x] == 0 && board[_y - 2][_x] != Color)) {
 							result++;
 						}
 					}
 					else if (blankYh == 1) {
-						if (board[_y + 6][_x] != change) {
-							if (board[_y - 1][_x] != change || (board[_y - 1][_x] == 0 && board[_y - 2][_x] == change)) {
+						if (board[_y + 6][_x] != Color) {
+							if (board[_y - 1][_x] == -Color || (board[_y - 1][_x] == 0 && board[_y - 2][_x] != Color)) {
 								result++;
 							}
 						}
@@ -141,42 +212,46 @@ int checkOpen4(int _x, int _y, int _dir)
 				}
 				if (blankYh == 2 && blankYl != 2) {
 					if (blankYl == 0) {
-						if (board[_y + 6][_x] != change || (board[_y + 6][_x] == 0 && board[_y + 7][_x] == change)) {
+						if (board[_y + 6][_x] == -Color || (board[_y + 6][_x] == 0 && board[_y + 7][_x] != Color)) {
 							result++;
 						}
 					}
 					else if (blankYl == 1) {
-						if (board[_y - 1][_x] != change) {
-							if (board[_y + 6][_x] != change || (board[_y + 6][_x] == 0 && board[_y + 7][_x] == change)) {
+						if (board[_y - 1][_x] != Color) {
+							if (board[_y + 6][_x] == -Color || (board[_y + 6][_x] == 0 && board[_y + 7][_x] != Color)) {
 								result++;
 							}
 						}
 					}
 				}
 				if (blankYl == 2 && blankYh == 2) {
-					if (board[_y + 6][_x] != change || (board[_y + 6][_x] == 0 && board[_y + 7][_x] == change)) {
-						if (board[_y - 1][_x] == change || (board[_y - 1][_x] == 0 && board[_y - 2][_x] == change)) {
+					if (board[_y + 6][_x] == -Color || (board[_y + 6][_x] == 0 && board[_y + 7][_x] != Color)) {
+						if (board[_y - 1][_x] == -Color || (board[_y - 1][_x] == 0 && board[_y - 2][_x] != Color)) {
 							result++;
 						}
 					}
 				}
 			}
 		}
+		if (result > 0)
+			printf("세로방향 열린4 찾음(%d%d)\n", blankYl, blankYh);
 		break;
 
 		// 3. 상향대각선 판독 (시작점 (_x, _y)에 대해서 _x = 0 ~ 12, _y = 0 ~ 12)
 	case 2:
-		if ((_x >= 0 && _x <= 12) && (_y >= 0 && _y <= 12)) {
-			if (board[_y][_x] == 0 && board[_y + 1][_x + 1] == change && board[_y + 2][_x + 2] == change && board[_y + 3][_x + 3] == change && board[_y + 4][_x + 4] == change && board[_y + 5][_x + 5] == 0) {
+		printf("상향 대각선 판독 시작...\n");
+		printf("(%d, %d) ~ (%d, %d)를 탐색합니다.\n", _x, _y, _x + 5, _y + 5);
+		if (_x <= 13) {
+			if (board[_y][_x] == 0 && board[_y + 1][_x + 1] == Col && board[_y + 2][_x + 2] == Col && board[_y + 3][_x + 3] == Col && board[_y + 4][_x + 4] == Col && board[_y + 5][_x + 5] == 0) {
 				if (blankDul == 2 && blankDuh != 2) {
 					if (blankDuh == 0) {
-						if (board[_y - 1][_x - 1] != change || (board[_y - 1][_x - 1] == 0 && board[_y - 2][_x - 2] == change)) {
+						if (board[_y - 1][_x - 1] == -Color || (board[_y - 1][_x - 1] == 0 && board[_y - 2][_x - 2] != Color)) {
 							result++;
 						}
 					}
 					else if (blankDuh == 1) {
-						if (board[_y + 6][_x + 6] != change) {
-							if (board[_y - 1][_x - 1] != change || (board[_y - 1][_x - 1] == 0 && board[_y - 2][_x - 2] == change)) {
+						if (board[_y + 6][_x + 6] != Color) {
+							if (board[_y - 1][_x - 1] == -Color || (board[_y - 1][_x - 1] == 0 && board[_y - 2][_x - 2] != Color)) {
 								result++;
 							}
 						}
@@ -184,71 +259,76 @@ int checkOpen4(int _x, int _y, int _dir)
 				}
 				if (blankDuh == 2 && blankDul != 2) {
 					if (blankDul == 0) {
-						if (board[_y + 6][_x + 6] != change || (board[_y + 6][_x + 6] == 0 && board[_y + 7][_x + 7] == change)) {
+						if (board[_y + 6][_x + 6] == -Color || (board[_y + 6][_x + 6] == 0 && board[_y + 7][_x + 7] != Color)) {
 							result++;
 						}
 					}
 					else if (blankDul == 1) {
-						if (board[_y][_x - 1] != change) {
-							if (board[_y][_x + 6] != change || (board[_y][_x + 6] == 0 && board[_y][_x + 7] == change)) {
+						if (board[_y - 1][_x - 1] != Color) {
+							if (board[_y + 6][_x + 6] == -Color || (board[_y + 6][_x + 6] == 0 && board[_y + 7][_x + 7] != Color)) {
 								result++;
 							}
 						}
 					}
 				}
 				if (blankDul == 2 && blankDuh == 2) {
-					if (board[_y + 6][_x + 6] != change || (board[_y + 6][_x + 6] == 0 && board[_y + 7][_x + 7] == change)) {
-						if (board[_y - 1][_x - 1] != change || (board[_y - 1][_x - 1] == 0 && board[_y - 2][_x - 2] == change)) {
+					if (board[_y + 6][_x + 6] == -Color || (board[_y + 6][_x + 6] == 0 && board[_y + 7][_x + 7] != Color)) {
+						if (board[_y - 1][_x - 1] == -Color || (board[_y - 1][_x - 1] == 0 && board[_y - 2][_x - 2] != Color)) {
 							result++;
 						}
 					}
 				}
 			}
 		}
+		if (result > 0)
+			printf("상향 대각선 방향 열린4 찾음(%d%d)\n", blankDul, blankDuh);
 		break;
 
 		// 4. 하향대각선 판독 (시작점 (_x, _y)에 대해서 _x = 0 ~ 12, _y = 0 ~ 12)
 	case 3:
 		printf("하향 대각선 판독 시작...\n");
-		if ((_x >= 0 && _x <= 12) && (_y >= 6 && _y <= 18)) {
-			if (board[_y][_x] == 0 && board[_y - 1][_x + 1] == change && board[_y - 2][_x + 2] == change && board[_y - 3][_x + 3] == change && board[_y - 4][_x + 4] == change && board[_y - 5][_x + 5] == 0) {
+		printf("(%d, %d) ~ (%d, %d)를 탐색합니다.\n", _x, _y, _x + 5, _y + 5);
+		if (_x <= 13) {
+			if (board[_y][_x] == 0 && board[_y - 1][_x + 1] == Col && board[_y - 2][_x + 2] == Col && board[_y - 3][_x + 3] == Col && board[_y - 4][_x + 4] == Col && board[_y - 5][_x + 5] == 0) {
 				if (blankDdl == 2 && blankDdh != 2) {
 					if (blankDdh == 0) {
-						if (board[_y + 1][_x - 1] != change || (board[_y + 1][_x - 1] == 0 && board[_y + 2][_x - 2] == change)) {
+						if (board[_y + 1][_x - 1] == -Color || (board[_y + 1][_x - 1] == 0 && board[_y + 2][_x - 2] != Color)) {
 							result++;
 						}
 					}
 					else if (blankDdh == 1) {
-						if (board[_y - 6][_x + 6] != change) {
-							if (board[_y + 1][_x - 1] != change || (board[_y + 1][_x - 1] == 0 && board[_y + 2][_x - 2] == change)) {
+						if (board[_y - 6][_x + 6] != Color) {
+							if (board[_y + 1][_x - 1] == -Color || (board[_y + 1][_x - 1] == 0 && board[_y + 2][_x - 2] != Color)) {
 								result++;
 							}
 						}
 					}
 				}
 				if (blankDdh == 2 && blankDdl != 2) {
-					if (blankDdl == 0) {
-						if (board[_y - 6][_x + 6] != change || (board[_y - 6][_x + 6] == 0 && board[_y - 7][_x + 7] == change)) {
+					if (blankDul == 0) {
+						if (board[_y - 6][_x + 6] == -Color || (board[_y - 6][_x + 6] == 0 && board[_y - 7][_x + 7] != Color)) {
 							result++;
 						}
 					}
-					else if (blankDdl == 1) {
-						if (board[_y - 1][_x + 1] != change) {
-							if (board[_y - 6][_x + 6] != change || (board[_y - 6][_x + 6] == 0 && board[_y - 7][_x + 7] == change)) {
+					else if (blankXl == 1) {
+						if (board[_y + 1][_x - 1] != Color) {
+							if (board[_y - 6][_x + 6] == -Color || (board[_y - 6][_x + 6] == 0 && board[_y - 7][_x + 7] != Color)) {
 								result++;
 							}
 						}
 					}
 				}
-				if (blankDdl == 2 && blankDdh == 2) {
-					if (board[_y - 6][_x + 6] != change || (board[_y - 6][_x + 6] == 0 && board[_y - 7][_x + 7] == change)) {
-						if (board[_y + 1][_x - 1] =! change || (board[_y + 1][_x - 1] == 0 && board[_y + 2][_x - 2] == change)) {
+				if (blankXl == 2 && blankXh == 2) {
+					if (board[_y - 6][_x + 6] == -Color || (board[_y - 6][_x + 6] == 0 && board[_y - 7][_x + 7] != Color)) {
+						if (board[_y + 1][_x - 1] == -Color || (board[_y + 1][_x - 1] == 0 && board[_y + 2][_x - 2] != Color)) {
 							result++;
 						}
 					}
 				}
 			}
 		}
+		if (result > 0)
+			printf("하향 대각선 방향 열린4 찾음(%d%d)\n", blankDdl, blankDdh);
 		break;
 
 	default:
@@ -262,222 +342,104 @@ int checkOpen4(int _x, int _y, int _dir)
 int ban33 (int _x, int _y) {
     int num3 = 0;  // 열린 3의 개수를 받는 변수
 	int temp = board[_y][_x];		// (_x, _y)의 자료값을 임시 저장하는 변수
-	int BlankXl, BlankYl, BlankXh, BlankYh;				// 왼쪽/위쪽/오른쪽/아래쪽 벽과의 거리 확인변수
-	int BlankDul, BlankDuh, BlankDdl, BlankDdh;			// 우하단, 우상단 방향으로의 대각선 거리 확인변수
-	
-	board[_y][_x] = change;			// (_x, _y)의 값을 현재 플레이어의 값으로 변경
+	int Xl, Yl, Xh, Yh;				// 왼쪽/위쪽/오른쪽/아래쪽 벽과의 거리 확인변수
+	int Dul, Duh, Ddl, Ddh;			// 우하단, 우상단 방향으로의 대각선 거리 확인변수
+	int temploc[6] = { 0 };			// 6개 좌표의 값을 임시 저장하는 변수
 
-	// 벽과의 거리를 1, 2, 3, 4, 15, 16, 17, ect로 반환하는 함수.
-	// 벽과의 거리에 따라서 판독법을 변경한다
-	switch (_x)  {
-	case 1:
-		BlankXl = 0;
-		BlankXh = 3;
-		break;
-	case 2:
-		BlankXl = 1;
-		BlankXh = 3;
-		break;
-	case 3:
-		BlankXl = 2;
-		BlankXh = 3;
-		break;
-	case 4:
-		BlankXl = 2;
-		BlankXh = 3;
-		break;
-	case 15:
-		BlankXl = 4;
-		BlankXh = 2;
-		break;
-	case 16:
-		BlankXl = 4;
-		BlankXh = 1;
-		break;
-	case 17:
-		BlankXl = 4;
-		BlankXh = 0;
-		break;
-	default:
-		BlankXl = 4;
-		BlankXh = 3;
-		break;
-	};
+	// (_x, _y)의 값을 현재 플레이어의 값으로 변경
+	if (change == 0)
+		board[_y][_x] = 1;	
+	if (change == 1)
+		board[_y][_x] = -1;
 
-	switch (_y)  {
-	case 1:
-		BlankYl = 0;
-		BlankYh = 3;
-		break;
-	case 2:
-		BlankYl = 1;
-		BlankYh = 3;
-		break;
-	case 3:
-		BlankYl = 2;
-		BlankYh = 3;
-		break;
-	case 4:
-		BlankYl = 2;
-		BlankYh = 3;
-		break;
-	case 15:
-		BlankYl = 4;
-		BlankYh = 2;
-		break;
-	case 16:
-		BlankYl = 4;
-		BlankYh = 1;
-		break;
-	case 17:
-		BlankYl = 4;
-		BlankYh = 0;
-		break;
-	default:
-		BlankYl = 4;
-		BlankYh = 3;
-		break;
-	};
+	/*
+    // 열린3: 한 수를 더 두어서 열린4를 만들 수 있다.
+    // 열린4: 네 돌이 연속으로 있고, [다른돌/벽/빈칸+같은색돌]과 1칸 이상의 공백을 가진다. 따라서 열린4는 [공/돌/돌/돌/돌/공]으로 6의 크기를 가진다.
+	// _x, _y에 수를 둘 때 열린3이 완성 된다면, 하나의 수를 더 두어서 [돌돌돌돌]이 완성되어야 한다.
+	// _x, _y를 기준으로 총 4칸 이전까지 체크하여 공x돌돌, 공돌x돌, 공돌돌x, x공돌돌, 돌공x돌, 돌공돌x, x돌공돌, 돌x공돌, 돌돌공x, x돌돌공, 돌x돌공, 돌돌x공 중 하나인지 확인해야한다.
+	// 위의 12 케이스 중 하나에 해당하면, "공"에 해당하는 부분을 돌로 임시 변경하여 checkOpen4를 호출한다. 호출 뒤에는 원래값으로 초기화
+
+    // 각 방향별로 확인법
+
+    // 1. 방향별로 (X-4 또는 벽(0)) ~ (X-1 또는 벽-5(13))동안 checkOpen4(i, j, loc) 실행. 큰쪽을 따른다.
+	*/
+	Xl = (_x - 4 > 0) ? _x - 4 : 0;
+	Xh = (_x - 1 > 13) ? _x - 1 : 13;
+	Yl = (_y - 4 > 0) ? _y - 4 : 0;
+	Yh = (_y - 1 > 13) ? _y - 1 : 13;
 
 	// Dl(Dh)는 Xl,Yl(Xh,Yh) 중 작은 쪽을 따른다
-	BlankDul = (BlankXl > BlankYl) ? BlankYl : BlankXl;
-	BlankDuh = (BlankXh > BlankYh) ? BlankYh : BlankXh;
+	Dul = (Xl > Yl) ? Yl : Xl;
+	Duh = (Xh > Yh) ? Yh : Xh;
 
-	BlankDdl = (BlankXl > BlankYh) ? BlankYh : BlankXl;
-	BlankDdh = (BlankXh > BlankYl) ? BlankYl : BlankXh;
+	Ddl = (Xl > Yh) ? Yh : Xl;
+	Ddh = (Xh > Yl) ? Yl : Xh;
 
 	if ((_x >= 0 && _x <= 18) && (_y >= 0 && _y <= 18)) {
-		// 1. 하향 대각선 방향 열린3 확인
-		if (BlankDdl < 5) {			// _대각선 거리가 0 ~ 4일때 경우 시작점을 0 ~ (_x, _y 중 가까운쪽) - 1로 잡아서 확인한다. 
-			if (BlankDdl == BlankXl) {
-				for (int i = 0; i < _x - 1; i++) {
-					if (checkOpen4(i, _x + _y - i, 3) > 0)
-						num3++;
-				}
-			} else if (BlankDul == BlankYh) {
-				for (int i = 0; i < _y - 1; i++) {
-					if (checkOpen4(i, _x + _y - i, 3) > 0)
-						num3++;
-				}
+		// 1. 하향 대각선 방향 열린3 확인 (+, -)
+		for (int i = 0; i < Ddl + Ddh; i++) {
+			// 열린 4를 만들기 위해서 값을 임시저장
+			for (int j = 0; j < 6; j++) {
+				temploc[j] = board[_y + Dul - i - j][_x + Dul - i + j];
 			}
-		}
-		else if (BlankDdh > 14) {	//  _대각선 거리가 15 ~ 17일 경우 시작점을 (_x, _y 중 가까운쪽) - 4 ~ 13으로 잡아서 확인한다
-			if (BlankDdh == BlankXl) {
-				for (int i = _x - 4; i < 14; i++) {
-					if (checkOpen4(i, _x + _y + i, 3) > 0)
-						num3++;
-				}
-			}
-			else if (BlankDdh == BlankYh) {
-				for (int i = _y - 4; i < 14; i++) {
-					if (checkOpen4(i, _x + _y + i, 3) > 0)
-						num3++;
-				}
-			}
-		}
-		else {					// 대각선거리가 좌표가 5 ~ 14일 경우 시작점을 _x(_y)-4 ~ _x(_y)-1로 잡아서 확인한다
-			if (BlankDdh == BlankXl) {
-				for (int i = _x - 4; i < _x - 1; i++) {
-					if (checkOpen4(i, _x + _y + i, 3) > 0)
-						num3++;
-				}
-			}
-			else if (BlankDdh == BlankYh) {
-				for (int i = _y - 4; i < _y - 1; i++) {
-					if (checkOpen4(i, _x + _y + i, 3) > 0)
-						num3++;
-				}
+
+			// 열린 4로 만들 수 있으면, 열린4인지 판정
+			if (makeOpen4(_x - Dul + i, _y + Dul - i, 0) > 0)
+				if (checkOpen4(_x - Dul + i, _y + Dul - i, 0) > 0)
+					num3++;
+			// 원상복귀
+			for (int j = 0; j < 6; j++) {
+				board[_y + Dul - i - j][_x + Dul - i + j] = temploc[j];
 			}
 		}
 
-		// 2. 상향 대각선 방향 열린3 확인
+		// 2. 상향 대각선 방향 열린3 확인 (+, +)
+		for (int i = 0; i < Dul + Duh; i++) {
+			// 열린 4를 만들기 위해서 값을 임시저장
+			for (int j = 0; j < 6; j++) {
+				temploc[j] = board[_y + Dul - i - j][_x + Dul + i + j];
+			}
 
-		if (BlankDul < 5) {			// _대각선 거리가 0 ~ 4일때 경우 시작점을 0 ~ (_x, _y 중 가까운쪽) - 1로 잡아서 확인한다. 
-			if (BlankDul == BlankXl) {
-				for (int i = 0; i < _x - 1; i++) {
-					if (checkOpen4(i, i, 2) > 0)
-						num3++;
-				}
+			// 열린 4로 만들 수 있으면, 열린4인지 판정
+			if (makeOpen4(_x - Dul + i, _y - Dul + i, 0) > 0)
+				if (checkOpen4(_x - Dul + i, _y - Dul + i, 0) > 0)
+					num3++;
+			// 원상복귀
+			for (int j = 0; j < 6; j++) {
+				board[_y + Dul - i - j][_x + Dul + i + j] = temploc[j];
 			}
-			else if (BlankDul == BlankYl) {
-				for (int i = 0; i < _y - 1; i++) {
-					if (checkOpen4(i, i, 2) > 0)
-						num3++;
-				}
-			}
+			
 		}
-		else if (BlankDuh > 14) {	//  _대각선 거리가 15 ~ 17일 경우 시작점을 (_x, _y 중 가까운쪽) - 4 ~ 13으로 잡아서 확인한다
-			if (BlankDuh == BlankXh) {
-				for (int i = _x - 4; i < 14; i++) {
-					if (checkOpen4(i, i, 2) > 0)
-						num3++;
-				}
-			}
-			else if (BlankDuh == BlankYh) {
-				for (int i = _y - 4; i < 14; i++) {
-					if (checkOpen4(i, i, 2) > 0)
-						num3++;
-				}
-			}
-		}
-		else {					// 대각선거리가 좌표가 5 ~ 14일 경우 시작점을 _x-4 ~ _x-1로 잡아서 확인한다
-			if (BlankDuh == BlankXh) {
-				for (int i = _x - 4; i < _x - 1; i++) {
-					if (checkOpen4(i, i, 2) > 0)
-						num3++;
-				}
-			}
-			else if (BlankDuh == BlankYh) {
-				for (int i = _y - 4; i < _y - 1; i++) {
-					if (checkOpen4(i, i, 2) > 0)
-						num3++;
-				}
-			}
-		}
-
-
 
 		// 3. 가로방향 열린3 확인
-		if (BlankXl < 5) {			// _x 좌표가 0 ~ 4일경우 시작점을 0 ~ _x-1로 잡아서 확인한다.
-			for (int i = 0; i < _x; i++) {
-				if (checkOpen4(i, _y, 0) > 0) {
-					num3++;
-				}
+		for (int i = 0; i < Xl + Xh; i++) {
+			for (int j = 0; j < 6; j++) {
+				temploc[j] = board[_y][_x - Xl + i + j];
 			}
-		}
-		else if (BlankXh > 14) {	// _x 좌표가 15 ~ 17일 경우 시작점을 _x-4 ~ 13으로 잡아서 확인한다
-			for (int i = _x - 4; i < 14; i++) {
-				if (checkOpen4(i, _y, 0) > 0)
+
+			// 열린 4로 만들 수 있으면, 열린4인지 판정
+			if (makeOpen4(_x - Xl + i, _y, 0) > 0)
+				if (checkOpen4(_x - i, _y, 0) > 0)
 					num3++;
-			}
-		}
-		else {					// _x 좌표가 5 ~ 14일 경우 시작점을 _x-4 ~ _x-1로 잡아서 확인한다
-			for (int i = _x - 4; i < _x; i++) {
-				if (checkOpen4(i, _y, 0) > 0) {
-					num3++;
-				}
+			// 원상복귀
+			for (int j = 0; j < 6; j++) {
+				board[_y][_x + Xl + i + j] = temploc[j];
 			}
 		}
 
 		// 4. 세로방향 열린3 확인
-		if (BlankYl < 5) {			// _y 좌표가 0 ~ 4일경우 시작점을 0 ~ _y-1로 잡아서 확인한다.
-			for (int i = 0; i < _y; i++) {
-				if (checkOpen4(_x, i, 1) > 0) {
-					num3++;
-				}
+		for (int i = 0; i < Yl + Yh; i++) {
+			for (int j = 0; j < 6; j++) {
+				temploc[j] = board[_y - Yl + i + j][_x];
 			}
-		}
-		else if (BlankYh > 14) {	// _y 좌표가 15 ~ 17일 경우 시작점을 _y-4 ~ 13으로 잡아서 확인한다
-			for (int i = _y - 4; i < 14; i++) {
-				if (checkOpen4(_x, i, 1) > 0)
+
+			// 열린 4로 만들 수 있으면, 열린4인지 판정
+			if (makeOpen4(_x, _y - Yl + i, 0) > 0)
+				if (checkOpen4(_x, _y - i, 0) > 0)
 					num3++;
-			}
-		}
-		else {					// _y 좌표가 5 ~ 14일 경우 시작점을 _y-4 ~ _y-1로 잡아서 확인한다
-			for (int i = _y - 4; i < _y; i++) {
-				if (checkOpen4(_x, i, 1) > 0) {
-					num3++;
-				}
+			// 원상복귀
+			for (int j = 0; j < 6; j++) {
+				board[_y - Yl + i + j][_x] = temploc[j];
 			}
 		}
 	}
