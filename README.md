@@ -403,35 +403,35 @@ void fight(user1_card_result, user2_card_result) {
 // 미니게임1. 폭탄 피하기
 void mapprint(int(*map)[4]) {         //폭탄피하기 판 출력
     printf("   0 1 2 3\n");
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 4; i++)            //y축
     {
         printf("%d ", i);
-        for (int j = 0; j < 4; j++)
-        {
+        for (int j = 0; j < 4; j++)         //x축
+        { 
             if (map[i][j] == 0)
             {
-                printf("□");
-            }
+                printf("□");                  //폭탄 있는지 없는지 확인 전일 경우 □ 출력
+             }
             else if (map[i][j] == 7)
             {
-                printf("★");
+                printf("★");                   //폭탄이 있을 경우 별 출력
             }
             else if (map[i][j] == 8)
             {
-                printf(" .");
-            }
+                printf(" .");                  //폭탄이 없을 경우 . 출력
+            } 
         }
         printf("\n");
     }
 }
-int mini_game1(void)
+int mini_game1(void)       //폭탄 피하기 게임 메인
 {
-    int x = 0, y = 0;
-    int win = 0;
-    int rx = 0, ry = 0;
-    int map[4][4] = { 0 };
+    int x = 0, y = 0;       //사용자가 입력한 좌표 저장 변수
+    int win = 0;            //승리자 저장 1==B승리 , 0==W승리 
+    int rx = 0, ry = 0;    //폭탄 좌표 저장 변수
+    int map[4][4] = { 0 };     //4x4 배열 생성
     srand(time(NULL));
-    rx = rand() % 4;
+    rx = rand() % 4;          //랜덤으로 폭탄 위치 생성
     ry = rand() % 4;
     printf("*****************폭탄 피하기 게임!!*****************\n");
     printf("폭탄이 있는 좌표를 입력하는 사람이 지는 게임 입니다.\n");
@@ -441,63 +441,63 @@ int mini_game1(void)
 
         printf("\nB의 차례입니다.\n");
         printf("x좌표와 y좌표를 입력하시오:  ");
-    reB:
-        scanf_s("%d%d", &x, &y);
-        if (x == rx && y == ry) {
-            map[ry][rx] = 7;
+    reB:   //좌표를 잘못입력시 오는 곳
+        scanf_s("%d%d", &x, &y);         //사용자에게 좌표를 입력받음
+        if (x == rx && y == ry) {        //B가 입력한 좌표가 폭탄의 좌표와 같을 때
+            map[ry][rx] = 7;            //폭탄 위치 좌표에 별을 출력한다
             mapprint(map);
             win = 0; //W승리
             break;
         }
-        else if (map[y][x] == 8)
+        else if (map[y][x] == 8)   //이미 .이 출력되 어 있는 좌표를 입력했을 때
         {
             printf("이미 입력된 좌표입니다. 다시 입력하시오: ");
-            goto reB;
+            goto reB;   //reB로 이동하여 좌표를 다시 입력 받는다.
         }
-        else if (x < 0 || x>3 || y < 0 || y>3)
+        else if (x < 0 || x>3 || y < 0 || y>3)    //사용자가 범위를 벗어나 좌표를 입력했을 때
         {
             printf("범위에 벗어난 좌표 입니다. 다시 입력하시오: ");
             goto reB;
         }
-        else {
-            map[y][x] = 8;
+        else {            //B가 입력한 좌표가 폭탄의 좌표와 다를 때
+            map[y][x] = 8;      //입력한 좌표에 .출력
             mapprint(map);
 
         }
         printf("\nW의 차례입니다.\n");
         printf("x좌표와 y좌표를 입력하시오:  ");
-    reW:
-        scanf_s("%d%d", &x, &y);
-        if (x == rx && y == ry) {
-            map[ry][rx] = 7;
+    reW: //좌표를 잘못입력시 오는 곳
+        scanf_s("%d%d", &x, &y);   //사용자에게 좌표를 입력받음
+        if (x == rx && y == ry) {    //W가 입력한 좌표가 폭탄의 좌표와 같을 때
+            map[ry][rx] = 7;          //폭탄 위치 좌표에 별을 출력한다
             mapprint(map);
             win = 1; //B승리
             break;
         }
-        else if (map[y][x] == 8)
+        else if (map[y][x] == 8)   //이미 .이 출력되 어 있는 좌표를 입력했을 때
         {
             printf("이미 입력된 좌표입니다. 다시 입력하시오: ");
-            goto reW;
+            goto reW;  //reW로 이동하여 좌표를 다시 입력 받는다.
         }
-        else if (x < 0 || x>3 || y < 0 || y>3)
+        else if (x < 0 || x>3 || y < 0 || y>3)    //사용자가 범위를 벗어나 좌표를 입력했을 때
         {
             printf("범위에 벗어난 좌표 입니다. 다시 입력하시오: ");
             goto reW;
         }
-        else {
-            map[y][x] = 8;
+        else {     //W가 입력한 좌표가 폭탄의 좌표와 다를 때
+            map[y][x] = 8;    //입력한 좌표에 .출력
             mapprint(map);
 
         }
 
     }
 
-    if (win == 1) {
+    if (win == 1) {      //폭탄을 W가 밟았을 때
         printf("\n펑~~!!  ");
         printf("B의 승리!\n");
         Sleep(Time3);
     }
-    if (win == 0) {
+    if (win == 0) {      //폭탄을 B가 밟았을 때
         printf("\n펑~~!!  ");
         printf("W의 승리!\n");
         Sleep(Time3);
@@ -505,7 +505,7 @@ int mini_game1(void)
 
 
 
-    return win;
+    return win;     //승리자 
 }
 
 
