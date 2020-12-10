@@ -16,13 +16,14 @@
  이를 미니게임으로 정하기로 하였습니다.
  
  ## zokbo
+ 섯다의 족보의 고유값을 리턴값으로 받는 함수
  
  ## game
- 
+ 섯다 게임 진행하는 함수
  ## zokbo_print
- 
+ zokbo함수의 리턴값의 맞는 카드의 값을 출력하는 함수
  ## fight
- 
+ 서로 베팅일시 게임을 진행하는 함수
  ## mapprint
  
  ## mini_game1
@@ -96,41 +97,41 @@ void fight(user1_card_result, user2_card_result);
 
 // 족보게임
 int game() {
-    int user1_card[2] = { 0,0 };
-    int user2_card[2] = { 0,0 };
-    int user1_card_result;
-    int user2_card_result;
+    int user1_card[2] = { 0,0 }; //user1 카드 초기화
+    int user2_card[2] = { 0,0 }; //user2 카드 초기화
+    int user1_card_result; // user1 랜덤패 알려주는 변수
+    int user2_card_result; // user2 랜덤패 알려주는 변수
     system("cls");
-    srand((unsigned int)time(NULL));
+    srand((unsigned int)time(NULL)); // 랜덤
     int menu;
     int c, d;
     if (count == 0) {
-        printf("게임머니가 10만원씩 지급됩니다");
+        printf("게임머니가 10만원씩 지급됩니다"); // 게임 첫번째 게임머니 지급
         cash1 = 100000;
         cash2 = 100000;
         fflush(stdin);
 
     }
 
-    while (1) {
-        count++;
-        user1_card[0] = rand() % 20 + 1;
-        user2_card[0] = rand() % 20 + 1;
+    while (1) { // 카드 대결 무한 반복
+        count++; // 한 게임이 끝날때 마다 카운트 세어줌
+        user1_card[0] = rand() % 20 + 1;// user 1 첫번째 카드 랜덤지급
+        user2_card[0] = rand() % 20 + 1;// user 2 첫번째 카드 랜덤지급
         while (1) {
             if (user1_card[0] != user1_card[1] != user2_card[0] != user2_card[1]) {
-                user1_card[1] = rand() % 20 + 1;
-                user2_card[1] = rand() % 20 + 1;
+                user1_card[1] = rand() % 20 + 1; //  user 1 에게  user 1,2 첫번째 카드 뽑힌거 제외하고 2번째 카드 랜덤지급
+                user2_card[1] = rand() % 20 + 1; // user 2 에게 첫번째 카드 와 user 1이 뽑은카드 제외하고 2번째 카드 랜덤지급
             }
             else
-                break;
+                break; 
 
         }
 
-        user1_card_result = zokbo(user1_card[0], user1_card[1]);
-        user2_card_result = zokbo(user2_card[0], user2_card[1]);
+        user1_card_result = zokbo(user1_card[0], user1_card[1]); // user 1의 카드 족보를 저장
+        user2_card_result = zokbo(user2_card[0], user2_card[1]); // user 2의 카드 족보를 저장
         printf("\n1을 누르면 3초간 user1의 패를 보여주겠습니다\n");
         scanf_s("%d", &c);
-        if (c == 1) {
+        if (c == 1) { // 3초간 user1의 뽑은 카드 보여줌
             printf("user1의 카드는\n");
             zokbo_print(user1_card_result);
             Sleep(3000);
@@ -139,7 +140,7 @@ int game() {
         }
         printf("1을 누르면 3초간 user2의 패를 보여주겠습니다\n");
         scanf_s("%d", &d);
-        if (d == 1) {
+        if (d == 1) { // 3초간 user2가 뽑은 카드 보여줌
             printf("user2의 카드는\n");
             zokbo_print(user2_card_result);
             Sleep(3000);
@@ -147,21 +148,21 @@ int game() {
             printf("\n");
         }
         int a, b;
-        printf("user1 베팅 하시겠습니까?\n");
+        printf("user1 베팅 하시겠습니까?\n"); // user 1이 베팅할지 정함
         printf("1.베팅\n");
         printf("2.다이\n");
         scanf_s("%d", &a);
         if (a == 1) {
-            printf("user2 베팅 하시겠습니까?\n");
+            printf("user2 베팅 하시겠습니까?\n"); //user 1이 베팅할경우 user2 가 베팅할지 정함
             printf("1.베팅\n");
             printf("2.다이\n");
             scanf_s("%d", &b);
 
             switch (b) {
-            case 1:
+            case 1: //user2가 베팅할시 대결
                 fight(user1_card_result, user2_card_result);
                 break;
-            case 2:
+            case 2: // user2가 다이할시 5000원 차감되고 재대결 시작
                 while (1) {
                     printf("user2 다이 기본참가금 5000원이 차감됩니다\n");
 
@@ -171,7 +172,7 @@ int game() {
                 }
             }
         }
-        else if (a == 2) {
+        else if (a == 2) { // user 1 다이 선택시 5000원 차감후 게임 재시작
             while (1) {
                 printf("user1 다이 기본참가금 5000원이 차감됩니다\n");
                 cash1 -= 5000;
@@ -183,18 +184,18 @@ int game() {
             }
 
         }
-        if (cash1 <= 0) {
+        if (cash1 <= 0) { // user1의 돈이 0이하가 되면 파산 후 패배
             printf("user1 파산 당신의 패배입니다\n");
             printf("user2가 선공(1)할지 후공(2)할지 골라주세요\n");
             int n;
-            scanf_s("%d", &n);
+            scanf_s("%d", &n); // user 2가 승리자로써 선공 후공 선택
             if (n == 1) {
                 system("cls");
                 printf("user2 선공!(B)입니다.\n");
                 return 1;
 
             }
-            else if (n == 2) {
+            else if (n == 2) { // 
                 system("cls");
                 printf("user1 선공!(B)입니다.\n");
                 return 1;
@@ -205,11 +206,11 @@ int game() {
 
 
         }
-        else if (cash2 <= 0) {
+        else if (cash2 <= 0) { // user2 돈이 0이하가 되면 파산 후 패배
             printf("user2 파산 당신의 패배입니다\n");
             printf("user1이 선공(1)할지 후공(2)할지 골라주세요\n");
             int m;
-            scanf_s("%d", &m);
+            scanf_s("%d", &m); //user1이 선공 후공 결정
             if (m == 1) {
                 system("cls");
                 printf("user1 선공!(B)입니다.\n");
@@ -225,7 +226,7 @@ int game() {
         }
     }
 }
-int zokbo(card0, card1) {
+int zokbo(card0, card1) { // 카드 랜덤선택후 각 카드 고유의 리턴값을 받아 zokbo_print에 알려줌
     if (card0 == 3 && card1 == 8 || card0 == 8 && card1 == 3)
         return 1;
     else if (card0 == 1 && card1 == 8 || card0 == 8 && card1 == 1)
@@ -277,7 +278,7 @@ int zokbo(card0, card1) {
 
 
 }
-void zokbo_print(result_card) {
+void zokbo_print(result_card) { // 카드들의 족보를 print해서 보여줌
     switch (result_card) {
     case 1:
         printf("38 광땡입니다\n");
@@ -353,11 +354,11 @@ void zokbo_print(result_card) {
         break;
     }
 }
-void fight(user1_card_result, user2_card_result) {
+void fight(user1_card_result, user2_card_result) { // user 1카드의 족보와 user 2카드의 족보 카드대결 시작
     int bet_money1;
     int bet_money2;
     while (1) {
-        system("cls");
+        system("cls"); //게임 함수에서 베팅 선택완료시 user1 배팅금엑 자유 지정
         printf("user1 얼마를 베팅하시겠습니까?\n");
         printf("user1 당신의 보유 금액은%d 입니다\n", cash1);
         printf("베팅금액:\n");
@@ -365,7 +366,7 @@ void fight(user1_card_result, user2_card_result) {
 
 
 
-        printf("user2 얼마를 베팅하시겠습니까?\n");
+        printf("user2 얼마를 베팅하시겠습니까?\n"); //게임 함수에서 베팅 선택완료시 user2 배팅금엑 자유 지정
         printf("user2 당신의 보유 금액은%d 입니다\n", cash2);
         printf("베팅금액:\n");
         scanf_s("%d", &bet_money2);
@@ -375,28 +376,28 @@ void fight(user1_card_result, user2_card_result) {
 
     }
     printf("user1의 카드는\n");
-    zokbo_print(user1_card_result);
+    zokbo_print(user1_card_result); //user1 카드 족보 알려줌
     Sleep(3000);
     printf("user2의 카드는\n");
-    zokbo_print(user2_card_result);
+    zokbo_print(user2_card_result);//user 2 카드 족보 알려줌
 
-    if (user1_card_result < user2_card_result) {
+    if (user1_card_result < user2_card_result) { // user 2승리시 user 2 베팅한금액과 user1 베팅한 금액을 가지게됨 
         printf("user1이 user2가 베팅한 금액과 자신의 베팅한 금액을 가지게 됩니다\n");
         cash1 += bet_money2;
         cash2 -= bet_money2;
-        printf("user1의 현재 보유 금액은: %d\n", cash1);
-        printf("user2의 현재 보유 금액은: %d\n", cash2);
+        printf("user1의 현재 보유 금액은: %d\n", cash1); //user 1 현재 보유 금액 띄워줌
+        printf("user2의 현재 보유 금액은: %d\n", cash2);//user 2 현재 보유 금액 띄워줌
     }
 
-    else if (user1_card_result > user2_card_result) {
+    else if (user1_card_result > user2_card_result) { // user 1승리시 user 2 베팅한금액과 user1 베팅한 금액을 가지게됨 
         printf("user2가 user1이 베팅한 금액과 자신의 베팅한 금액을 가지게 됩니다\n");
         cash2 += bet_money1;
         cash1 -= bet_money1;
-        printf("user1의 현재 보유 금액은: %d\n", cash1);
-        printf("user2의 현재 보유 금액은: %d\n", cash2);
+        printf("user1의 현재 보유 금액은: %d\n", cash1);//user 1 현재 보유 금액 띄워줌
+        printf("user2의 현재 보유 금액은: %d\n", cash2);//user 2 현재 보유 금액 띄워줌
     }
 
-    else if (user1_card_result == user2_card_result) {
+    else if (user1_card_result == user2_card_result) { //동일 족보일시 재경기
         printf("동일 족보 재경기합니다\n");
         count--;
     }
@@ -1017,17 +1018,18 @@ void turnprint(int(*board)[19], int _turn)   // 차례결정 & 선택 좌표에 
     }
 }
 
-int game_end(int(*Board)[19]) {
+int game_end(int(*Board)[19]) { //5목 완성될시 승리 출력
     int i;
     int j;
     for (i = 2; i < 18; i++) {
-        for (j = 0; j < 20; j++) {
+        for (j = 0; j < 20; j++) { // 한 돌이 있을때 좌우 탐색후 black 돌이 5목이면 선공 승리 출력
             if (Board[j][i - 2] == 1 && Board[j][i - 1] == 1 && Board[j][i] == 1 && Board[j][i + 1] == 1 && Board[j][i + 2] == 1) {
                 system("Cls");
                 printf("선공 승리\n");
 
                 return 1;
             }
+            // 한 돌이 있을때 좌우 탐색후 white 돌이 5목이면 후공 승리 출력
             else if (Board[j][i - 2] == -1 && Board[j][i - 1] == -1 && Board[j][i] == -1 && Board[j][i + 1] == -1 && Board[j][i + 2] == -1) {
                 system("Cls");
                 printf("후공 승리\n");
@@ -1038,13 +1040,14 @@ int game_end(int(*Board)[19]) {
     }
     for (i = 2; i < 18; i++) {
         for (j = 0; j < 20; j++) {
-
+            // 한 돌이 있을때 위 아래 탐색후 black 돌이 5목이면 선공 승리 출력
             if (Board[i - 2][j] == 1 && Board[i - 1][j] == 1 && Board[i][j] == 1 && Board[i + 1][j] == 1 && Board[i + 2][j] == 1) {
                 system("Cls");
                 printf("선공 승리\n");
 
                 return 1;
             }
+            // 한 돌이 있을때 좌우 탐색후 white 돌이 5목이면 후공 승리 출력
             else if (Board[i - 2][j] == -1 && Board[i - 1][j] == -1 && Board[i][j] == -1 && Board[i + 1][j] == -1 && Board[i + 2][j] == -1) {
                 system("Cls");
                 printf("후공 승리\n");
@@ -1056,13 +1059,14 @@ int game_end(int(*Board)[19]) {
 
 
     for (i = 2; i < 18; i++) {
-        for (j = 2; j < 18; j++) {
+        for (j = 2; j < 18; j++) { //  /대각선 방향으로 탐색후 black 돌이 5목이면 선공 승리 출력 
             if (Board[j - 2][i - 2] == 1 && Board[j - 1][i - 1] == 1 && Board[j][i] == 1 && Board[j + 1][i + 1] == 1 && Board[j + 2][i + 2] == 1) {
                 system("Cls");
                 printf("선공 승리\n");
 
                 return 1;
             }
+            //  /대각선 방향으로 탐색후 white 돌이 5목이면 후공 승리 출력 
             else if (Board[j - 2][i - 2] == -1 && Board[j - 1][i - 1] == -1 && Board[j][i] == -1 && Board[j + 1][i + 1] == -1 && Board[j + 2][i + 2] == -1) {
                 system("Cls");
                 printf("후공 승리\n");
@@ -1074,13 +1078,14 @@ int game_end(int(*Board)[19]) {
 
     for (i = 2; i < 18; i++) {
         for (j = 2; j < 18; j++) {
-
+             //  \대각선 방향으로 탐색후 black 돌이 5목이면 선공 승리 출력
             if (Board[j + 2][i - 2] == 1 && Board[j + 1][i - 1] == 1 && Board[j][i] == 1 && Board[j - 1][i + 1] == 1 && Board[j - 2][i + 2] == 1) {
                 system("Cls");
                 printf("선공 승리\n");
 
                 return 1;
             }
+            //   \대각선 방향으로 탐색후 white 돌이 5목이면 후공 승리 출력 
             else if (Board[j + 2][i - 2] == -1 && Board[j + 1][i - 1] == -1 && Board[j][i] == -1 && Board[j - 1][i + 1] == -1 && Board[j - 2][i + 2] == -1) {
                 system("Cls");
                 printf("후공 승리\n");
