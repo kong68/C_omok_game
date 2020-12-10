@@ -75,6 +75,9 @@
  board의 내용을 읽어서, 해당 좌표의 값을 반환하는 함수입니다.
  
  ## check33
+ (x, y)에 흑돌을 두었을 때, 흑이 33규칙을 위반하는지를 확인합니다.
+ 가로/세로/상향대각선/하향대각선 네 방향 중 두 방향 이상에서 열린3이 존재한다면, check33은 1을 반환합니다.
+ 33규칙에 어긋나면 1을, 아니면 0을 반환합니다.
  
  ## 메인함수 (5mok.c)
  
@@ -827,7 +830,7 @@ void ReturnStone(int Stone)
 
     while (1)
     {
-        if (Stone == Value)      //선택한돌과 사용자의 돌색이 같으면 그 돌을 없애고 다시 둘 수 있습니다.
+        if (Stone == Value && check_33(X,Y) != 1)      //선택한돌과 사용자의 돌색이 같으면 그 돌을 없애고 다시 둘 수 있습니다.
         {
             board[Y][X] = 0;
             Board();
@@ -845,6 +848,10 @@ void ReturnStone(int Stone)
         {
             Board();
             printf("선택한 돌이 자신의 돌 색과 다름니다. 다시 입력해주세요. : ");
+            scanf_s("%d %d", &X, &Y);
+            Value = board[Y][X];
+        }
+        else if (check_33(X, Y) == 1) {
             scanf_s("%d %d", &X, &Y);
             Value = board[Y][X];
         }
@@ -901,7 +908,7 @@ void turnprint(int(*board)[19], int _turn)   // 차례결정 & 선택 좌표에 
                 do {
                     printf("X좌표와 Y좌표를 입력하시오:  ");
                     scanf_s("%d%d", &selectX, &selectY);
-                } while (checkloc(selectX, selectY) != 0);    //해당 좌표에 돌이 있는지 확인
+                } while (checkloc(selectX, selectY) != 0 || check_33(selectX, selectY) == 1);    //해당 좌표에 돌이 있는지 확인
                 board[selectY][selectX] = 1;  //없을 경우 돌을 놓음
                 change = 0;   //상대방 으로 턴을 
                 break;
@@ -1555,3 +1562,4 @@ int main(void) {
     Board();
     return 0;
 }
+```
