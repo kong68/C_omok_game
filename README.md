@@ -637,6 +637,94 @@ void LetterColor(int color) { // 오목돌 색 변경
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (6 << 4) + BLACK);
 }
 
+int check_33(int x, int y)
+{
+    // 가로, 세로, 상향대각선, 하향대각선 방향으로 33이 존재하는지 확인하고, 총합이 2를 넘으면 33규칙에 어긋남을 알림.
+    // 정상시 0을, 33규칙 위반시 1을 반환
+
+    int count = 0;
+    // 가로체크. 
+    if ((board[y][x - 4] == 0 && board[y][x - 3] == 1 && board[y][x - 2] == 0 && board[y][x - 1] == 1 && board[y][x + 1] == 0) ||
+        (board[y][x - 4] == 0 && board[y][x - 3] == 1 && board[y][x - 2] == 1 && board[y][x - 1] == 0 && board[y][x + 1] == 0) ||
+        (board[y][x - 4] == 0 && board[y][x - 3] == 0 && board[y][x - 2] == 1 && board[y][x - 1] == 1 && board[y][x + 1] == 0) ||
+
+        (board[y][x - 3] == 0 && board[y][x - 2] == 1 && board[y][x - 1] == 0 && board[y][x + 1] == 1 && board[y][x + 2] == 0) ||
+        (board[y][x - 3] == 0 && board[y][x - 2] == 1 && board[y][x - 1] == 1 && board[y][x + 1] == 0 && board[y][x + 2] == 0) ||
+        (board[y][x - 3] == 0 && board[y][x - 2] == 0 && board[y][x - 1] == 1 && board[y][x + 1] == 1 && board[y][x + 2] == 0) ||
+
+        (board[y][x - 2] == 0 && board[y][x - 1] == 1 && board[y][x + 1] == 0 && board[y][x + 2] == 1 && board[y][x + 1] == 0) ||
+        (board[y][x - 2] == 0 && board[y][x - 1] == 1 && board[y][x + 1] == 1 && board[y][x + 2] == 0 && board[y][x + 1] == 0) ||
+        (board[y][x - 2] == 0 && board[y][x - 1] == 0 && board[y][x + 1] == 1 && board[y][x + 2] == 1 && board[y][x + 1] == 0) ||
+
+        (board[y][x - 1] == 0 && board[y][x + 1] == 1 && board[y][x + 2] == 0 && board[y][x + 3] == 1 && board[y][x + 4] == 0) ||
+        (board[y][x - 1] == 0 && board[y][x + 1] == 1 && board[y][x + 2] == 1 && board[y][x + 3] == 0 && board[y][x + 4] == 0) ||
+        (board[y][x - 1] == 0 && board[y][x + 1] == 0 && board[y][x + 2] == 1 && board[y][x + 3] == 1 && board[y][x + 4] == 0))
+
+
+
+        count++;
+    // 세로체크. 
+    if ((board[y - 4][x] == 0 && board[y - 3][x] == 1 && board[y - 2][x] == 0 && board[y - 1][x] == 1 && board[y + 1][x] == 0) ||
+        (board[y - 4][x] == 0 && board[y - 3][x] == 1 && board[y - 2][x] == 1 && board[y - 1][x] == 0 && board[y + 1][x] == 0) ||
+        (board[y - 4][x] == 0 && board[y - 3][x] == 0 && board[y - 2][x] == 1 && board[y - 1][x] == 1 && board[y + 1][x] == 0) ||
+
+        (board[y - 3][x] == 0 && board[y - 2][x] == 1 && board[y - 1][x] == 0 && board[y + 1][x] == 1 && board[y + 2][x] == 0) ||
+        (board[y - 3][x] == 0 && board[y - 2][x] == 1 && board[y - 1][x] == 1 && board[y + 1][x] == 0 && board[y + 2][x] == 0) ||
+        (board[y - 3][x] == 0 && board[y - 2][x] == 0 && board[y - 1][x] == 1 && board[y + 1][x] == 1 && board[y + 2][x] == 0) ||
+
+        (board[y - 2][x] == 0 && board[y - 1][x] == 1 && board[y + 1][x] == 0 && board[y + 2][x] == 1 && board[y + 3][x] == 0) ||
+        (board[y - 2][x] == 0 && board[y - 1][x] == 1 && board[y + 1][x] == 1 && board[y + 2][x] == 0 && board[y + 3][x] == 0) ||
+        (board[y - 2][x] == 0 && board[y - 1][x] == 0 && board[y + 1][x] == 1 && board[y + 2][x] == 1 && board[y + 3][x] == 0) ||
+
+        (board[y - 1][x] == 0 && board[y + 1][x] == 1 && board[y + 2][x] == 0 && board[y + 3][x] == 1 && board[y + 4][x] == 0) ||
+        (board[y - 1][x] == 0 && board[y + 1][x] == 1 && board[y + 2][x] == 1 && board[y + 3][x] == 0 && board[y + 4][x] == 0) ||
+        (board[y - 1][x] == 0 && board[y + 1][x] == 0 && board[y + 2][x] == 1 && board[y + 3][x] == 1 && board[y + 4][x] == 0))
+
+        count++;
+    // 대각선체크. (++)
+    if ((board[y - 4][x - 4] == 0 && board[y - 3][x - 3] == 1 && board[y - 2][x - 2] == 0 && board[y - 1][x - 1] == 1 && board[y + 1][x + 1] == 0) ||
+        (board[y - 4][x - 4] == 0 && board[y - 3][x - 3] == 1 && board[y - 2][x - 2] == 1 && board[y - 1][x - 1] == 0 && board[y + 1][x + 1] == 0) ||
+        (board[y - 4][x - 4] == 0 && board[y - 3][x - 3] == 0 && board[y - 2][x - 2] == 1 && board[y - 1][x - 1] == 1 && board[y + 1][x + 1] == 0) ||
+
+        (board[y - 3][x - 3] == 0 && board[y - 2][x - 2] == 1 && board[y - 1][x - 1] == 0 && board[y + 1][x + 1] == 1 && board[y + 2][x + 2] == 0) ||
+        (board[y - 3][x - 3] == 0 && board[y - 2][x - 2] == 1 && board[y - 1][x - 1] == 1 && board[y + 1][x + 1] == 0 && board[y + 2][x + 2] == 0) ||
+        (board[y - 3][x - 3] == 0 && board[y - 2][x - 2] == 0 && board[y - 1][x - 1] == 1 && board[y + 1][x + 1] == 1 && board[y + 2][x + 2] == 0) ||
+
+        (board[y - 2][x - 2] == 0 && board[y - 1][x - 1] == 1 && board[y + 1][x + 1] == 0 && board[y + 2][x + 2] == 1 && board[y + 3][x + 3] == 0) ||
+        (board[y - 2][x - 2] == 0 && board[y - 1][x - 1] == 1 && board[y + 1][x + 1] == 1 && board[y + 2][x + 2] == 0 && board[y + 3][x + 3] == 0) ||
+        (board[y - 2][x - 2] == 0 && board[y - 1][x - 1] == 0 && board[y + 1][x + 1] == 1 && board[y + 2][x + 2] == 1 && board[y + 3][x + 3] == 0) ||
+
+        (board[y - 1][x - 1] == 0 && board[y + 1][x + 1] == 1 && board[y + 2][x + 2] == 0 && board[y + 3][x + 3] == 1 && board[y + 4][x + 4] == 0) ||
+        (board[y - 1][x - 1] == 0 && board[y + 1][x + 1] == 1 && board[y + 2][x + 2] == 1 && board[y + 3][x + 3] == 0 && board[y + 4][x + 4] == 0) ||
+        (board[y - 1][x - 1] == 0 && board[y + 1][x + 1] == 0 && board[y + 2][x + 2] == 1 && board[y + 3][x + 3] == 1 && board[y + 4][x + 4] == 0))
+
+        count++;
+    // 반대 대각선체크. (+-)
+
+    if ((board[y + 4][x - 4] == 0 && board[y + 3][x - 3] == 1 && board[y + 2][x - 2] == 0 && board[y + 1][x - 1] == 1 && board[y - 1][x + 1] == 0) ||
+        (board[y + 4][x - 4] == 0 && board[y + 3][x - 3] == 1 && board[y + 2][x - 2] == 1 && board[y + 1][x - 1] == 0 && board[y - 1][x + 1] == 0) ||
+        (board[y + 4][x - 4] == 0 && board[y + 3][x - 3] == 0 && board[y + 2][x - 2] == 1 && board[y + 1][x - 1] == 1 && board[y - 1][x + 1] == 0) ||
+
+        (board[y + 3][x - 3] == 0 && board[y + 2][x - 2] == 1 && board[y + 1][x - 1] == 0 && board[y - 1][x + 1] == 1 && board[y - 2][x + 2] == 0) ||
+        (board[y + 3][x - 3] == 0 && board[y + 2][x - 2] == 1 && board[y + 1][x - 1] == 1 && board[y - 1][x + 1] == 0 && board[y - 2][x + 2] == 0) ||
+        (board[y + 3][x - 3] == 0 && board[y + 2][x - 2] == 0 && board[y + 1][x - 1] == 1 && board[y - 1][x + 1] == 1 && board[y - 2][x + 2] == 0) ||
+
+        (board[y + 2][x - 2] == 0 && board[y + 1][x - 1] == 1 && board[y - 1][x + 1] == 0 && board[y - 2][x + 2] == 1 && board[y - 3][x + 3] == 0) ||
+        (board[y + 2][x - 2] == 0 && board[y + 1][x - 1] == 1 && board[y - 1][x + 1] == 1 && board[y - 2][x + 2] == 0 && board[y - 3][x + 3] == 0) ||
+        (board[y + 2][x - 2] == 0 && board[y + 1][x - 1] == 0 && board[y - 1][x + 1] == 1 && board[y - 2][x + 2] == 1 && board[y - 3][x + 3] == 0) ||
+
+        (board[y + 1][x - 1] == 0 && board[y - 1][x + 1] == 1 && board[y - 2][x + 2] == 0 && board[y - 3][x + 3] == 1 && board[y - 4][x + 4] == 0) ||
+        (board[y + 1][x - 1] == 0 && board[y - 1][x + 1] == 1 && board[y - 2][x + 2] == 1 && board[y - 3][x + 3] == 0 && board[y - 4][x + 4] == 0) ||
+        (board[y + 1][x - 1] == 0 && board[y - 1][x + 1] == 0 && board[y - 2][x + 2] == 1 && board[y - 3][x + 3] == 1 && board[y - 4][x + 4] == 0))
+        count++;
+
+    if (count > 1) {
+        printf("(%d, %d)는 33규칙에 위반되는 자리입니다.\n", x, y);
+        return 1;
+    }
+    else return 0;
+}
+
 void Board(void)            //오목판 함수
 {
     printf("ⓞ①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮ⓐⓑⓒ -- x좌표\n");
