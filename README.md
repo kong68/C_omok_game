@@ -899,31 +899,34 @@ void turnprint(int(*board)[19], int _turn)   // 차례결정 & 선택 좌표에 
                 board[selectY][selectX] = 1;  //없을 경우 돌을 놓음
                 change = 0;   //상대방 으로 턴을 
                 break;
+                //상대돌 빼기
             case 2:
-                if (randnum == 1) {
-                    if (BaskinRobbins() == 1) {
-                        SomeoneStone(1);
+                if (randnum == 1) {              //랜덤으로 미니게임생성 1일 경우 베스킨라빈스
+                    if (BaskinRobbins() == 1) {  //승리시
+                        SomeoneStone(1);         //상대돌 빼기 함수 실행
                     }
-                    change = 0;
+                    change = 0;              //상대에게 턴 넘겨줌
                 }
-                else if (randnum == 0) {
-                    if (mini_game1() == 1) {
-                        SomeoneStone(1);
+                else if (randnum == 0) {     //랜덤으로 미니게임생성 0일 경우 폭탄피하기
+                    if (mini_game1() == 1) {     //승리시
+                        SomeoneStone(1);    //상대돌 빼기 함수 실행
                     }
-                    change = 0;
+                    change = 0;   //상대에게 턴 넘겨줌
                 }
-                // 상대 돌빼기 함수
+              
                 break;
+                
+                //자신돌 바꾸기
             case 3:
-                if (randnum == 0) {
-                    if (mini_game1() == 1)
-                        ReturnStone(1);
-                    change = 0;
+                if (randnum == 0) {   //랜덤으로 미니게임생성 0일 경우 폭탄피하기
+                    if (mini_game1() == 1)   //승리시
+                        ReturnStone(1);  //자신돌 바꾸기 함수 실행
+                    change = 0;   //상대에게 턴 넘겨줌
                 }
-                else if (randnum == 1) {
-                    if (BaskinRobbins() == 1)
-                        ReturnStone(1);
-                    change = 0;
+                else if (randnum == 1) {    //랜덤으로 미니게임생성 1일 경우 베스킨라빈스
+                    if (BaskinRobbins() == 1)   //승리시
+                        ReturnStone(1);    //자신돌 바꾸기 함수 실행
+                    change = 0;   //상대에게 턴 넘겨줌
                 }
                 break;
             default:
@@ -936,61 +939,63 @@ void turnprint(int(*board)[19], int _turn)   // 차례결정 & 선택 좌표에 
             do {
                 printf("X좌표와 Y좌표를 입력하시오:  ");
                 scanf_s("%d%d", &selectX, &selectY);
-            } while (checkloc(selectX, selectY) != 0);
+            } while (checkloc(selectX, selectY) != 0);    //해당 좌표에 돌이 있는지 확인 돌이 없는 곳 입력 할때 까지 반복
             board[selectY][selectX] = 1;
-            change = 0;
+            change = 0;   //상대에게 턴 넘겨줌
         }
     }
-    else if (change == 0)
+    else if (change == 0) //
     {
         printf("W의 차례입니다.\n");
         // 4턴 이상인 경우, 돌두기/상대돌빼기/자신돌바꾸기 중에 선택
         if (_turn > 4) {
             do {
                 printf("1: 돌 두기\t2:상대 돌빼기\t3:자신 돌바꾸기");
-                scanf_s("%d", &_order);
-                if (_order < 0 || _order > 3)
+                scanf_s("%d", &_order);  //1,2,3 중 실행하고 싶은 좌표를 입력받음
+                if (_order < 0 || _order > 3)   //1,2,3 외의 것을 입력하였을 때
                     printf("올바른 지시를 입력해주십시오.\n");
-            } while (_order < 0 || _order > 3);
+            } while (_order < 0 || _order > 3);   //올바른 값을 입력하면 빠져 나옴
             switch (_order) {
             case 1:
                 // 돌두기 함수
                 do {
                     printf("X좌표와 Y좌표를 입력하시오:  ");
                     scanf_s("%d%d", &selectX, &selectY);
-                } while (checkloc(selectX, selectY) != 0);
-                board[selectY][selectX] = -1;
-                change = 1;
+                } while (checkloc(selectX, selectY) != 0);  //해당 좌표에 돌이 있는지 확인
+                board[selectY][selectX] = -1;   //없을 경우 돌을 놓음
+                change = 1;    //상대에게 턴 넘겨줌
                 break;
+                // 상대 돌빼기
             case 2:
-                if (randnum == 1) {
-                    if (BaskinRobbins() == 0) {
-                        SomeoneStone(-1);
+                if (randnum == 1) {    //랜덤으로 미니게임생성 1일 경우 베스킨라빈스
+                    if (BaskinRobbins() == 0) {    //승리시
+                        SomeoneStone(-1);  //상대돌 빼기 함수 실행
                     }
-                    change = 1;
+                    change = 1;    //상대에게 턴 넘겨줌
                 }
-                else if (randnum == 0) {
-                    if (mini_game1() == 0) {
-                        SomeoneStone(-1);
+                else if (randnum == 0) {   //랜덤으로 미니게임생성 0일 경우 폭탄피하기
+                    if (mini_game1() == 0) {   //승리시
+                        SomeoneStone(-1);  //상대돌 빼기 함수 실행
                     }
-                    change = 1;
+                    change = 1;    //상대에게 턴 넘겨줌
                 }
-                // 상대 돌빼기 함수
+                
                 break;
+                //자신돌 
             case 3:
-                if (randnum == 0) {
-                    if (mini_game1() == 0)
-                        ReturnStone(-1);
-                    change = 1;
+                if (randnum == 0) {   //랜덤으로 미니게임생성 0일 경우 폭탄피하기
+                    if (mini_game1() == 0)  //승리시
+                        ReturnStone(-1);   //본인돌 바꾸기 함수 실행
+                    change = 1;   //상대에게 턴 넘겨줌
                 }
-                else if (randnum == 1) {
-                    if (BaskinRobbins() == 0)
-                        ReturnStone(-1);
-                    change = 1;
+                else if (randnum == 1) {   //랜덤으로 미니게임생성 1일 경우 베스킨라빈스
+                    if (BaskinRobbins() == 0)   //승리시
+                        ReturnStone(-1);    //본인돌 바꾸기 함수 실행
+                    change = 1;    //상대에게 턴 넘겨줌
                 }
                 break;
             default:
-                change = 1;
+                change = 1;    //상대에게 턴 넘겨줌
                 break;
 
             }
@@ -1000,9 +1005,9 @@ void turnprint(int(*board)[19], int _turn)   // 차례결정 & 선택 좌표에 
             do {
                 printf("X좌표와 Y좌표를 입력하시오:  ");
                 scanf_s("%d%d", &selectX, &selectY);
-            } while (checkloc(selectX, selectY) != 0);
+            } while (checkloc(selectX, selectY) != 0);   //해당 좌표에 돌이 있는지 확인 돌이 없는 곳 입력 할때 까지 반복
             board[selectY][selectX] = -1;
-            change = 1;
+            change = 1;    //상대에게 턴 넘겨줌
         }
     }
 }
