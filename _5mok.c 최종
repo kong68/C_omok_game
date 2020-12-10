@@ -15,6 +15,59 @@ void zokbo_print(result_card);
 void fight(user1_card_result, user2_card_result);
 
 // 족보게임
+int zokbo(card0, card1) { // 카드 랜덤선택후 각 카드 고유의 리턴값을 받아 zokbo_print에 알려줌
+    if (card0 == 3 && card1 == 8 || card0 == 8 && card1 == 3)
+        return 1;
+    else if (card0 == 1 && card1 == 8 || card0 == 8 && card1 == 1)
+        return 2;
+    else if (card0 == 1 && card1 == 3 || card0 == 3 && card1 == 1)
+        return 3;
+    else if (card0 == 10 && card1 == 20 || card0 == 20 && card1 == 10)
+        return 4;
+    else if (card0 == 9 && card1 == 19 || card0 == 19 && card1 == 9)
+        return 5;
+    else if (card0 == 8 && card1 == 18 || card0 == 18 && card1 == 8)
+        return 6;
+    else if (card0 == 7 && card1 == 17 || card0 == 17 && card1 == 7)
+        return 7;
+    else if (card0 == 6 && card1 == 16 || card0 == 16 && card1 == 6)
+        return 8;
+    else if (card0 == 5 && card1 == 15 || card0 == 15 && card1 == 5)
+        return 9;
+    else if (card0 == 4 && card1 == 14 || card0 == 14 && card1 == 4)
+        return 10;
+    else if (card0 == 3 && card1 == 13 || card0 == 13 && card1 == 3)
+        return 11;
+    else if (card0 == 2 && card1 == 12 || card0 == 12 && card1 == 2)
+        return 12;
+    else if (card0 == 1 && card1 == 11 || card0 == 11 && card1 == 1)
+        return 13;
+
+
+    else {
+        if (card0 + card1 == 9 || card0 + card1 == 19 || card0 + card1 == 29 || card0 + card1 == 39)
+            return 14;
+        else if (card0 + card1 == 8 || card0 + card1 == 18 || card0 + card1 == 28 || card0 + card1 == 38)
+            return 15;
+        else if (card0 + card1 == 7 || card0 + card1 == 17 || card0 + card1 == 27 || card0 + card1 == 37)
+            return 16;
+        else if (card0 + card1 == 6 || card0 + card1 == 16 || card0 + card1 == 26 || card0 + card1 == 36)
+            return 17;
+        else if (card0 + card1 == 5 || card0 + card1 == 15 || card0 + card1 == 25 || card0 + card1 == 35)
+            return 18;
+        else if (card0 + card1 == 4 || card0 + card1 == 14 || card0 + card1 == 24 || card0 + card1 == 34)
+            return 19;
+        else if (card0 + card1 == 3 || card0 + card1 == 13 || card0 + card1 == 23 || card0 + card1 == 33)
+            return 20;
+        else if (card0 + card1 == 2 || card0 + card1 == 12 || card0 + card1 == 22 || card0 + card1 == 32)
+            return 21;
+        else if (card0 + card1 == 1 || card0 + card1 == 11 || card0 + card1 == 21 || card0 + card1 == 31)
+            return 22;
+        else
+            return -1;
+    }
+
+}
 int game() {
     int user1_card[2] = { 0,0 }; //user1 카드 초기화
     int user2_card[2] = { 0,0 }; //user2 카드 초기화
@@ -42,7 +95,7 @@ int game() {
                 user2_card[1] = rand() % 20 + 1; // user 2 에게 첫번째 카드 와 user 1이 뽑은카드 제외하고 2번째 카드 랜덤지급
             }
             else
-                break; 
+                break;
 
         }
 
@@ -144,58 +197,6 @@ int game() {
 
         }
     }
-}
-int zokbo(card0, card1) { // 카드 랜덤선택후 각 카드 고유의 리턴값을 받아 zokbo_print에 알려줌
-    if (card0 == 3 && card1 == 8 || card0 == 8 && card1 == 3)
-        return 1;
-    else if (card0 == 1 && card1 == 8 || card0 == 8 && card1 == 1)
-        return 2;
-    else if (card0 == 1 && card1 == 3 || card0 == 3 && card1 == 1)
-        return 3;
-    else if (card0 == 10 && card1 == 20 || card0 == 20 && card1 == 10)
-        return 4;
-    else if (card0 == 9 && card1 == 19 || card0 == 19 && card1 == 9)
-        return 5;
-    else if (card0 == 8 && card1 == 18 || card0 == 18 && card1 == 8)
-        return 6;
-    else if (card0 == 7 && card1 == 17 || card0 == 17 && card1 == 7)
-        return 7;
-    else if (card0 == 6 && card1 == 16 || card0 == 16 && card1 == 6)
-        return 8;
-    else if (card0 == 5 && card1 == 15 || card0 == 15 && card1 == 5)
-        return 9;
-    else if (card0 == 4 && card1 == 14 || card0 == 14 && card1 == 4)
-        return 10;
-    else if (card0 == 3 && card1 == 13 || card0 == 13 && card1 == 3)
-        return 11;
-    else if (card0 == 2 && card1 == 12 || card0 == 12 && card1 == 2)
-        return 12;
-    else if (card0 == 1 && card1 == 11 || card0 == 11 && card1 == 1)
-        return 13;
-
-
-    else {
-        if (card0 + card1 == 9 || card0 + card1 == 19 || card0 + card1 == 29 || card0 + card1 == 39)
-            return 14;
-        else if (card0 + card1 == 8 || card0 + card1 == 18 || card0 + card1 == 28 || card0 + card1 == 38)
-            return 15;
-        else if (card0 + card1 == 7 || card0 + card1 == 17 || card0 + card1 == 27 || card0 + card1 == 37)
-            return 16;
-        else if (card0 + card1 == 6 || card0 + card1 == 16 || card0 + card1 == 26 || card0 + card1 == 36)
-            return 17;
-        else if (card0 + card1 == 5 || card0 + card1 == 15 || card0 + card1 == 25 || card0 + card1 == 35)
-            return 18;
-        else if (card0 + card1 == 4 || card0 + card1 == 14 || card0 + card1 == 24 || card0 + card1 == 34)
-            return 19;
-        else if (card0 + card1 == 3 || card0 + card1 == 13 || card0 + card1 == 23 || card0 + card1 == 33)
-            return 20;
-        else if (card0 + card1 == 2 || card0 + card1 == 12 || card0 + card1 == 22 || card0 + card1 == 32)
-            return 21;
-        else if (card0 + card1 == 1 || card0 + card1 == 11 || card0 + card1 == 21 || card0 + card1 == 31)
-            return 22;
-    }
-
-
 }
 void zokbo_print(result_card) { // 카드들의 족보를 print해서 보여줌
     switch (result_card) {
@@ -332,11 +333,11 @@ void mapprint(int(*map)[4]) {         //폭탄피하기 판 출력
     {
         printf("%d ", i);
         for (int j = 0; j < 4; j++)         //x축
-        { 
+        {
             if (map[i][j] == 0)
             {
                 printf("□");                  //폭탄 있는지 없는지 확인 전일 경우 □ 출력
-             }
+            }
             else if (map[i][j] == 7)
             {
                 printf("★");                   //폭탄이 있을 경우 별 출력
@@ -344,7 +345,7 @@ void mapprint(int(*map)[4]) {         //폭탄피하기 판 출력
             else if (map[i][j] == 8)
             {
                 printf(" .");                  //폭탄이 없을 경우 . 출력
-            } 
+            }
         }
         printf("\n");
     }
@@ -355,7 +356,7 @@ int mini_game1(void)       //폭탄 피하기 게임 메인
     int win = 0;            //승리자 저장 1==B승리 , 0==W승리 
     int rx = 0, ry = 0;    //폭탄 좌표 저장 변수
     int map[4][4] = { 0 };     //4x4 배열 생성
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
     rx = rand() % 4;          //랜덤으로 폭탄 위치 생성
     ry = rand() % 4;
     printf("*****************폭탄 피하기 게임!!*****************\n");
@@ -733,6 +734,93 @@ void Board(void)            //오목판 함수
 int change = 1;
 int win = 0;
 
+int check_33(int x, int y)
+{
+    // 가로, 세로, 상향대각선, 하향대각선 방향으로 33이 존재하는지 확인하고, 총합이 2를 넘으면 33규칙에 어긋남을 알림.
+    // 정상시 0을, 33규칙 위반시 1을 반환
+
+    int count = 0;
+    // 가로체크. 
+    if ((board[y][x - 4] == 0 && board[y][x - 3] == 1 && board[y][x - 2] == 0 && board[y][x - 1] == 1 && board[y][x + 1] == 0) ||
+        (board[y][x - 4] == 0 && board[y][x - 3] == 1 && board[y][x - 2] == 1 && board[y][x - 1] == 0 && board[y][x + 1] == 0) ||
+        (board[y][x - 4] == 0 && board[y][x - 3] == 0 && board[y][x - 2] == 1 && board[y][x - 1] == 1 && board[y][x + 1] == 0) ||
+
+        (board[y][x - 3] == 0 && board[y][x - 2] == 1 && board[y][x - 1] == 0 && board[y][x + 1] == 1 && board[y][x + 2] == 0) ||
+        (board[y][x - 3] == 0 && board[y][x - 2] == 1 && board[y][x - 1] == 1 && board[y][x + 1] == 0 && board[y][x + 2] == 0) ||
+        (board[y][x - 3] == 0 && board[y][x - 2] == 0 && board[y][x - 1] == 1 && board[y][x + 1] == 1 && board[y][x + 2] == 0) ||
+
+        (board[y][x - 2] == 0 && board[y][x - 1] == 1 && board[y][x + 1] == 0 && board[y][x + 2] == 1 && board[y][x + 1] == 0) ||
+        (board[y][x - 2] == 0 && board[y][x - 1] == 1 && board[y][x + 1] == 1 && board[y][x + 2] == 0 && board[y][x + 1] == 0) ||
+        (board[y][x - 2] == 0 && board[y][x - 1] == 0 && board[y][x + 1] == 1 && board[y][x + 2] == 1 && board[y][x + 1] == 0) ||
+
+        (board[y][x - 1] == 0 && board[y][x + 1] == 1 && board[y][x + 2] == 0 && board[y][x + 3] == 1 && board[y][x + 4] == 0) ||
+        (board[y][x - 1] == 0 && board[y][x + 1] == 1 && board[y][x + 2] == 1 && board[y][x + 3] == 0 && board[y][x + 4] == 0) ||
+        (board[y][x - 1] == 0 && board[y][x + 1] == 0 && board[y][x + 2] == 1 && board[y][x + 3] == 1 && board[y][x + 4] == 0))
+
+
+
+        count++;
+    // 세로체크. 
+    if ((board[y - 4][x] == 0 && board[y - 3][x] == 1 && board[y - 2][x] == 0 && board[y - 1][x] == 1 && board[y + 1][x] == 0) ||
+        (board[y - 4][x] == 0 && board[y - 3][x] == 1 && board[y - 2][x] == 1 && board[y - 1][x] == 0 && board[y + 1][x] == 0) ||
+        (board[y - 4][x] == 0 && board[y - 3][x] == 0 && board[y - 2][x] == 1 && board[y - 1][x] == 1 && board[y + 1][x] == 0) ||
+
+        (board[y - 3][x] == 0 && board[y - 2][x] == 1 && board[y - 1][x] == 0 && board[y + 1][x] == 1 && board[y + 2][x] == 0) ||
+        (board[y - 3][x] == 0 && board[y - 2][x] == 1 && board[y - 1][x] == 1 && board[y + 1][x] == 0 && board[y + 2][x] == 0) ||
+        (board[y - 3][x] == 0 && board[y - 2][x] == 0 && board[y - 1][x] == 1 && board[y + 1][x] == 1 && board[y + 2][x] == 0) ||
+
+        (board[y - 2][x] == 0 && board[y - 1][x] == 1 && board[y + 1][x] == 0 && board[y + 2][x] == 1 && board[y + 3][x] == 0) ||
+        (board[y - 2][x] == 0 && board[y - 1][x] == 1 && board[y + 1][x] == 1 && board[y + 2][x] == 0 && board[y + 3][x] == 0) ||
+        (board[y - 2][x] == 0 && board[y - 1][x] == 0 && board[y + 1][x] == 1 && board[y + 2][x] == 1 && board[y + 3][x] == 0) ||
+
+        (board[y - 1][x] == 0 && board[y + 1][x] == 1 && board[y + 2][x] == 0 && board[y + 3][x] == 1 && board[y + 4][x] == 0) ||
+        (board[y - 1][x] == 0 && board[y + 1][x] == 1 && board[y + 2][x] == 1 && board[y + 3][x] == 0 && board[y + 4][x] == 0) ||
+        (board[y - 1][x] == 0 && board[y + 1][x] == 0 && board[y + 2][x] == 1 && board[y + 3][x] == 1 && board[y + 4][x] == 0))
+
+        count++;
+    // 대각선체크. (++)
+    if ((board[y - 4][x - 4] == 0 && board[y - 3][x - 3] == 1 && board[y - 2][x - 2] == 0 && board[y - 1][x - 1] == 1 && board[y + 1][x + 1] == 0) ||
+        (board[y - 4][x - 4] == 0 && board[y - 3][x - 3] == 1 && board[y - 2][x - 2] == 1 && board[y - 1][x - 1] == 0 && board[y + 1][x + 1] == 0) ||
+        (board[y - 4][x - 4] == 0 && board[y - 3][x - 3] == 0 && board[y - 2][x - 2] == 1 && board[y - 1][x - 1] == 1 && board[y + 1][x + 1] == 0) ||
+
+        (board[y - 3][x - 3] == 0 && board[y - 2][x - 2] == 1 && board[y - 1][x - 1] == 0 && board[y + 1][x + 1] == 1 && board[y + 2][x + 2] == 0) ||
+        (board[y - 3][x - 3] == 0 && board[y - 2][x - 2] == 1 && board[y - 1][x - 1] == 1 && board[y + 1][x + 1] == 0 && board[y + 2][x + 2] == 0) ||
+        (board[y - 3][x - 3] == 0 && board[y - 2][x - 2] == 0 && board[y - 1][x - 1] == 1 && board[y + 1][x + 1] == 1 && board[y + 2][x + 2] == 0) ||
+
+        (board[y - 2][x - 2] == 0 && board[y - 1][x - 1] == 1 && board[y + 1][x + 1] == 0 && board[y + 2][x + 2] == 1 && board[y + 3][x + 3] == 0) ||
+        (board[y - 2][x - 2] == 0 && board[y - 1][x - 1] == 1 && board[y + 1][x + 1] == 1 && board[y + 2][x + 2] == 0 && board[y + 3][x + 3] == 0) ||
+        (board[y - 2][x - 2] == 0 && board[y - 1][x - 1] == 0 && board[y + 1][x + 1] == 1 && board[y + 2][x + 2] == 1 && board[y + 3][x + 3] == 0) ||
+
+        (board[y - 1][x - 1] == 0 && board[y + 1][x + 1] == 1 && board[y + 2][x + 2] == 0 && board[y + 3][x + 3] == 1 && board[y + 4][x + 4] == 0) ||
+        (board[y - 1][x - 1] == 0 && board[y + 1][x + 1] == 1 && board[y + 2][x + 2] == 1 && board[y + 3][x + 3] == 0 && board[y + 4][x + 4] == 0) ||
+        (board[y - 1][x - 1] == 0 && board[y + 1][x + 1] == 0 && board[y + 2][x + 2] == 1 && board[y + 3][x + 3] == 1 && board[y + 4][x + 4] == 0))
+
+        count++;
+    // 반대 대각선체크. (+-)
+
+    if ((board[y + 4][x - 4] == 0 && board[y + 3][x - 3] == 1 && board[y + 2][x - 2] == 0 && board[y + 1][x - 1] == 1 && board[y - 1][x + 1] == 0) ||
+        (board[y + 4][x - 4] == 0 && board[y + 3][x - 3] == 1 && board[y + 2][x - 2] == 1 && board[y + 1][x - 1] == 0 && board[y - 1][x + 1] == 0) ||
+        (board[y + 4][x - 4] == 0 && board[y + 3][x - 3] == 0 && board[y + 2][x - 2] == 1 && board[y + 1][x - 1] == 1 && board[y - 1][x + 1] == 0) ||
+
+        (board[y + 3][x - 3] == 0 && board[y + 2][x - 2] == 1 && board[y + 1][x - 1] == 0 && board[y - 1][x + 1] == 1 && board[y - 2][x + 2] == 0) ||
+        (board[y + 3][x - 3] == 0 && board[y + 2][x - 2] == 1 && board[y + 1][x - 1] == 1 && board[y - 1][x + 1] == 0 && board[y - 2][x + 2] == 0) ||
+        (board[y + 3][x - 3] == 0 && board[y + 2][x - 2] == 0 && board[y + 1][x - 1] == 1 && board[y - 1][x + 1] == 1 && board[y - 2][x + 2] == 0) ||
+
+        (board[y + 2][x - 2] == 0 && board[y + 1][x - 1] == 1 && board[y - 1][x + 1] == 0 && board[y - 2][x + 2] == 1 && board[y - 3][x + 3] == 0) ||
+        (board[y + 2][x - 2] == 0 && board[y + 1][x - 1] == 1 && board[y - 1][x + 1] == 1 && board[y - 2][x + 2] == 0 && board[y - 3][x + 3] == 0) ||
+        (board[y + 2][x - 2] == 0 && board[y + 1][x - 1] == 0 && board[y - 1][x + 1] == 1 && board[y - 2][x + 2] == 1 && board[y - 3][x + 3] == 0) ||
+
+        (board[y + 1][x - 1] == 0 && board[y - 1][x + 1] == 1 && board[y - 2][x + 2] == 0 && board[y - 3][x + 3] == 1 && board[y - 4][x + 4] == 0) ||
+        (board[y + 1][x - 1] == 0 && board[y - 1][x + 1] == 1 && board[y - 2][x + 2] == 1 && board[y - 3][x + 3] == 0 && board[y - 4][x + 4] == 0) ||
+        (board[y + 1][x - 1] == 0 && board[y - 1][x + 1] == 0 && board[y - 2][x + 2] == 1 && board[y - 3][x + 3] == 1 && board[y - 4][x + 4] == 0))
+        count++;
+
+    if (count > 1) {
+        printf("(%d, %d)는 33규칙에 위반되는 자리입니다.\n", x, y);
+        return 1;
+    }
+    else return 0;
+}
 
 void ReturnStone(int Stone)
 {
@@ -746,7 +834,7 @@ void ReturnStone(int Stone)
 
     while (1)
     {
-        if (Stone == Value && check_33(X,Y) != 1)      //선택한돌과 사용자의 돌색이 같으면 그 돌을 없애고 다시 둘 수 있습니다.
+        if (Stone == Value && check_33(X, Y) != 1)      //선택한돌과 사용자의 돌색이 같으면 그 돌을 없애고 다시 둘 수 있습니다.
         {
             board[Y][X] = 0;
             Board();
@@ -811,7 +899,7 @@ void turnprint(int(*board)[19], int _turn)   // 차례결정 & 선택 좌표에 
     {
         printf("B의 차례입니다.\n");
         // 4턴 이상인 경우, 돌두기/상대돌빼기/자신돌바꾸기 중에 선택
-        if (_turn > 4) {     
+        if (_turn > 4) {
             do {
                 printf("1: 돌 두기\t2:상대 돌빼기\t3:자신 돌바꾸기");
                 scanf_s("%d", &_order);    //1,2,3 중 실행하고 싶은 좌표를 입력받음
@@ -842,9 +930,9 @@ void turnprint(int(*board)[19], int _turn)   // 차례결정 & 선택 좌표에 
                     }
                     change = 0;   //상대에게 턴 넘겨줌
                 }
-              
+
                 break;
-                
+
                 //자신돌 바꾸기
             case 3:
                 if (randnum == 0) {   //랜덤으로 미니게임생성 0일 경우 폭탄피하기
@@ -908,7 +996,7 @@ void turnprint(int(*board)[19], int _turn)   // 차례결정 & 선택 좌표에 
                     }
                     change = 1;    //상대에게 턴 넘겨줌
                 }
-                
+
                 break;
                 //자신돌 
             case 3:
@@ -1001,7 +1089,7 @@ int game_end(int(*Board)[19]) { //5목 완성될시 승리 출력
 
     for (i = 2; i < 18; i++) {
         for (j = 2; j < 18; j++) {
-             //  \대각선 방향으로 탐색후 black 돌이 5목이면 선공 승리 출력
+            //  \대각선 방향으로 탐색후 black 돌이 5목이면 선공 승리 출력
             if (Board[j + 2][i - 2] == 1 && Board[j + 1][i - 1] == 1 && Board[j][i] == 1 && Board[j - 1][i + 1] == 1 && Board[j - 2][i + 2] == 1) {
                 system("Cls");
                 printf("선공 승리\n");
