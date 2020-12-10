@@ -874,7 +874,7 @@ void SomeoneStone(int Stone)
 void turnprint(int(*board)[19], int _turn)   // 차례결정 & 선택 좌표에 출력하는 함수.
 {
     srand((unsigned int)time(NULL));
-    int selectX = 0, selectY = 0;
+    int selectX = 0, selectY = 0;       //사용자가 선택한 좌표
     int _order = 0;
     int randnum = rand() % 2;      // randnum애는 0 or 1이 저장됨. 0일때 지뢰, 1일때 31
     //B ==1 ,검은돌==1   W==0 ,흰돌==-1
@@ -882,22 +882,22 @@ void turnprint(int(*board)[19], int _turn)   // 차례결정 & 선택 좌표에 
     {
         printf("B의 차례입니다.\n");
         // 4턴 이상인 경우, 돌두기/상대돌빼기/자신돌바꾸기 중에 선택
-        if (_turn > 4) {
+        if (_turn > 4) {     
             do {
                 printf("1: 돌 두기\t2:상대 돌빼기\t3:자신 돌바꾸기");
-                scanf_s("%d", &_order);
-                if (_order < 0 || _order > 3)
+                scanf_s("%d", &_order);    //1,2,3 중 실행하고 싶은 좌표를 입력받음
+                if (_order < 0 || _order > 3)    //1,2,3 외의 것을 입력하였을 때
                     printf("올바른 지시를 입력해주십시오.\n");
-            } while (_order < 0 || _order > 3);
+            } while (_order < 0 || _order > 3);   //올바른 값을 입력하면 빠져 나옴
             switch (_order) {
             case 1:
                 // 돌두기 함수
                 do {
                     printf("X좌표와 Y좌표를 입력하시오:  ");
                     scanf_s("%d%d", &selectX, &selectY);
-                } while (checkloc(selectX, selectY) != 0);
-                board[selectY][selectX] = 1;
-                change = 0;
+                } while (checkloc(selectX, selectY) != 0);    //해당 좌표에 돌이 있는지 확인
+                board[selectY][selectX] = 1;  //없을 경우 돌을 놓음
+                change = 0;   //상대방 으로 턴을 
                 break;
             case 2:
                 if (randnum == 1) {
